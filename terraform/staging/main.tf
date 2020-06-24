@@ -46,7 +46,7 @@ module "postgres_db_staging" {
     environment_name = "staging"
     vpc_id = data.aws_vpc.staging_vpc.id
     db_identifier = "resident-information"
-    db_name = "resident-information"
+    db_name = "resident_information"
     db_port  = 5202
     subnet_ids = data.aws_subnet_ids.staging.ids
     db_engine = "postgres"
