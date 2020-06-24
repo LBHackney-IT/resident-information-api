@@ -8,15 +8,15 @@ build:
 
 .PHONY: serve
 serve:
-	docker-compose build base-api && docker-compose up base-api
+	docker-compose build resident-information-api && docker-compose up resident-information-api
 
 .PHONY: shell
 shell:
-	docker-compose run base-api bash
+	docker-compose run resident-information-api bash
 
 .PHONY: test
 test:
-	docker-compose up test-database & docker-compose build base-api-test && docker-compose up base-api-test
+	docker-compose up test-database & docker-compose build resident-information-api-test && docker-compose up resident-information-api-test
 
 .PHONY: lint
 lint:
