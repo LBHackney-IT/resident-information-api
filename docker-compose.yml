@@ -1,10 +1,10 @@
 version: "3.2"
 
 services:
-  base-api:
-    image: base-api
+  resident-information-api:
+    image: resident-information
     build:
-      context: BaseApi/
+      context: ResidentInformationApi/
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000
@@ -19,11 +19,11 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d
 
-  base-api-test:
-    image: base-api-test
+  resident-information-api-test:
+    image: resident-information-api-test
     build:
       context: .
-      dockerfile: BaseApi.Tests/Dockerfile
+      dockerfile: ResidentInformationApi.Tests/Dockerfile
     environment:
       - DB_HOST=test-database
       - DB_PORT=5432
@@ -33,10 +33,11 @@ services:
     links:
       - test-database
   test-database:
-    image: postgres:12
+    image: test-database
+    build:
+      context: .
+      dockerfile: database/Dockerfile
     ports:
       - 5432:5432
     env_file:
       - database.env
-    volumes:
-      - ./database:/docker-entrypoint-initdb.d
