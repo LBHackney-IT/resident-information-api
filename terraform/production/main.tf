@@ -45,8 +45,8 @@ module "postgres_db_production" {
     source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/database/postgres"
     environment_name = "production"
     vpc_id = data.aws_vpc.production_vpc.id
-    db_identifier = "resident-information"
-    db_name = "resident-information"
+    db_identifier = "resident_information"
+    db_name = "resident_information"
     db_port  = 5200
     subnet_ids = data.aws_subnet_ids.production.ids
     db_engine = "postgres"
