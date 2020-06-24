@@ -106,6 +106,9 @@ jobs:
           name: build
           command: docker-compose build resident-information-api-test
       - run:
+          name: Run test database
+          command: docker-compose up test-database
+      - run:
           name: Run tests
           command: docker-compose run resident-information-api-test
   assume-role-development:
