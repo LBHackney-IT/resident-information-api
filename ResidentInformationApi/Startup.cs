@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.EntityFrameworkCore;
+// using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ResidentInformationApi.V1.Gateways;
-using ResidentInformationApi.V1.Infrastructure;
+// using ResidentInformationApi.V1.Infrastructure;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ResidentInformationApi
@@ -103,22 +103,22 @@ namespace ResidentInformationApi
                 if (File.Exists(xmlPath))
                     c.IncludeXmlComments(xmlPath);
             });
-            ConfigureDbContext(services);
+            // ConfigureDbContext(services);
             RegisterGateways(services);
             RegisterUseCases(services);
         }
 
-        private static void ConfigureDbContext(IServiceCollection services)
-        {
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+        // private static void ConfigureDbContext(IServiceCollection services)
+        // {
+        //     var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
-            services.AddDbContext<DatabaseContext>(
-                opt => opt.UseNpgsql(connectionString));
-        }
+        //     services.AddDbContext<DatabaseContext>(
+        //         opt => opt.UseNpgsql(connectionString));
+        // }
 
         private static void RegisterGateways(IServiceCollection services)
         {
-            services.AddSingleton<IExampleGateway, ExampleGateway>();
+            services.AddSingleton<IResidentInformationGateway, ResidentInformationGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)

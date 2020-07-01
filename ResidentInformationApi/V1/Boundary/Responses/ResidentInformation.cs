@@ -7,7 +7,15 @@ namespace ResidentInformationApi.V1.Boundary.Responses
         /// <example>
         /// abc123
         /// </example>
-        public string MosaicId { get; set; }
+        public string System { get; set; }
+        /// <example>
+        /// abc123
+        /// </example>
+        public string SystemId { get; set; }
+        /// <example>
+        /// abc123
+        /// </example>
+        public System.Uri SystemUrl { get; set; }
         /// <example>
         /// Ciasom
         /// </example>
