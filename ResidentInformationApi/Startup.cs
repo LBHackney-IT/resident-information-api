@@ -118,7 +118,7 @@ namespace ResidentInformationApi
 
         private static void RegisterGateways(IServiceCollection services)
         {
-            services.AddSingleton<IResidentInformationGateway, ResidentInformationGateway>();
+            services.AddSingleton<IHousingInformationGateway, HousingInformationGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)

@@ -5,18 +5,6 @@ namespace ResidentInformationApi.V1.Boundary.Responses
     public class ResidentInformation
     {
         /// <example>
-        /// abc123
-        /// </example>
-        public string System { get; set; }
-        /// <example>
-        /// abc123
-        /// </example>
-        public string SystemId { get; set; }
-        /// <example>
-        /// abc123
-        /// </example>
-        public System.Uri SystemUrl { get; set; }
-        /// <example>
         /// Ciasom
         /// </example>
         public string FirstName { get; set; }

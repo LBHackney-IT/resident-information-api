@@ -1,5 +1,4 @@
 using System.Data.Common;
-using ResidentInformationApi;
 using ResidentInformationApi.V1.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
