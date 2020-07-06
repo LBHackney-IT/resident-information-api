@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using ResidentInformationApi.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ResidentInformationApi.V1.Gateways;
+using ResidentInformationApi.Versioning;
 // using ResidentInformationApi.V1.Infrastructure;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ResidentInformationApi.V1.Controllers;
-using ResidentInformationApi.V1.UseCase;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using ResidentInformationApi.V1.Controllers;
+using ResidentInformationApi.V1.UseCase;
 
 namespace ResidentInformationApi.Tests.V1.Controllers
 {

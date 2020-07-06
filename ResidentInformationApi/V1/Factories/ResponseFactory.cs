@@ -3,9 +3,9 @@ using System.Linq;
 using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using Address = ResidentInformationApi.V1.Domain.Address;
+using AddressResponse = ResidentInformationApi.V1.Boundary.Responses.Address;
 using ResidentInformation = ResidentInformationApi.V1.Domain.ResidentInformation;
 using ResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.ResidentInformation;
-using AddressResponse = ResidentInformationApi.V1.Boundary.Responses.Address;
 
 namespace ResidentInformationApi.V1.Factories
 {

@@ -1,10 +1,10 @@
 using System.Threading;
-using ResidentInformationApi.V1.UseCase;
 using Bogus;
 using FluentAssertions;
 using Microsoft.Extensions.HealthChecks;
 using Moq;
 using NUnit.Framework;
+using ResidentInformationApi.V1.UseCase;
 
 namespace ResidentInformationApi.Tests.V1.UseCase
 {
