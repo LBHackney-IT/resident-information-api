@@ -61,7 +61,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         [Test]
         public async Task GetClaimantInformationReturnsArrayOfResidentInformationObjects()
         {
-            var rqp = new ResidentQueryParam { Address = "Address Line 1"};
+            var rqp = new ResidentQueryParam { Address = "Address Line 1" };
             var expected = new List<AcademyClaimantInformation> { _fixture.Create<AcademyClaimantInformation>() };
             var expectedJson = JsonConvert.SerializeObject(expected);
             SetUpMessageHandlerToReturnJson(expectedJson);
