@@ -34,31 +34,4 @@ data "aws_subnet_ids" "production" {
         values = ["private"]
     }
 }
-data "aws_ssm_parameter" "resident_info_postgres_db_password" {
-    name = "/resident-information-api/production/postgres-password"
-}
-data "aws_ssm_parameter" "resident_info_postgres_db_username" {
-    name = "/resident-information-api/production/postgres-username"
-}
-
-module "postgres_db_production" {
-    source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/database/postgres"
-    environment_name = "production"
-    vpc_id = data.aws_vpc.production_vpc.id
-    db_identifier = "resident-information"
-    db_name = "resident_information"
-    db_port  = 5200
-    subnet_ids = data.aws_subnet_ids.production.ids
-    db_engine = "postgres"
-    db_engine_version = "11.1" //DMS does not work well with v12
-    db_instance_class = "db.t2.micro"
-    db_allocated_storage = 20
-    maintenance_window ="sun:10:00-sun:10:30"
-    db_username = data.aws_ssm_parameter.resident_info_postgres_db_username.value
-    db_password = data.aws_ssm_parameter.resident_info_postgres_db_password.value
-    storage_encrypted = false
-    multi_az = true
-    publicly_accessible = false
-    project_name = "platform apis"
-}
 

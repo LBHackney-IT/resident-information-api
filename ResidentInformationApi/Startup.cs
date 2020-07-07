@@ -14,8 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ResidentInformationApi.V1.Gateways;
-using ResidentInformationApi.V1.Infrastructure;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ResidentInformationApi
@@ -103,22 +101,7 @@ namespace ResidentInformationApi
                 if (File.Exists(xmlPath))
                     c.IncludeXmlComments(xmlPath);
             });
-            ConfigureDbContext(services);
-            RegisterGateways(services);
             RegisterUseCases(services);
-        }
-
-        private static void ConfigureDbContext(IServiceCollection services)
-        {
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-
-            services.AddDbContext<DatabaseContext>(
-                opt => opt.UseNpgsql(connectionString));
-        }
-
-        private static void RegisterGateways(IServiceCollection services)
-        {
-            services.AddSingleton<IExampleGateway, ExampleGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)

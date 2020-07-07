@@ -13,7 +13,7 @@ namespace ResidentInformationApi.Tests.V1.UseCase
     {
 
         private Mock<IHealthCheckService> _mockHealthCheckService;
-        private DbHealthCheckUseCase _classUnderTest;
+        private HealthCheckUseCase _classUnderTest;
 
         private readonly Faker _faker = new Faker();
         private string _description;
@@ -32,7 +32,7 @@ namespace ResidentInformationApi.Tests.V1.UseCase
                     s.CheckHealthAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(compositeHealthCheckResult);
 
-            _classUnderTest = new DbHealthCheckUseCase(_mockHealthCheckService.Object);
+            _classUnderTest = new HealthCheckUseCase(_mockHealthCheckService.Object);
         }
 
         [Test]

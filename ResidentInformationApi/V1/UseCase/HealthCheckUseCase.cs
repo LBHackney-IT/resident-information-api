@@ -3,11 +3,11 @@ using ResidentInformationApi.V1.Boundary;
 
 namespace ResidentInformationApi.V1.UseCase
 {
-    public class DbHealthCheckUseCase
+    public class HealthCheckUseCase
     {
         private readonly IHealthCheckService _healthCheckService;
 
-        public DbHealthCheckUseCase(IHealthCheckService healthCheckService)
+        public HealthCheckUseCase(IHealthCheckService healthCheckService)
         {
             _healthCheckService = healthCheckService;
         }
