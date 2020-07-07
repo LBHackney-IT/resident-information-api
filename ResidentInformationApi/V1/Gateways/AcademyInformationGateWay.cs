@@ -4,29 +4,27 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ResidentInformationApi.V1.Boundary.Requests;
-using ResidentInformationApi.V1.Domain;
+using ResidentInformationApi.V1.Boundary.Responses;
 
 namespace ResidentInformationApi.V1.Gateways
 {
-    public class HousingInformationGateway : IHousingInformationGateway
+    public class AcademyInformationGateway : IAcademyInformationGateway
     {
         private readonly HttpClient _client;
         private readonly string _baseUrl;
 
-        public HousingInformationGateway(HttpClient client)
+        public AcademyInformationGateway(HttpClient client)
         {
             _client = client;
-            _baseUrl = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
+            _baseUrl = Environment.GetEnvironmentVariable("ACADEMY_API_ENDPOINT");
         }
-
-        public async Task<List<HousingResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
+        public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
         {
             var rqpString = JsonConvert.SerializeObject(rqp);
             var response = await _client.PostAsync(_baseUrl, new StringContent(rqpString));
             var content = await response.Content.ReadAsStringAsync();
-            var results = JsonConvert.DeserializeObject<List<HousingResidentInformation>>(content);
+            var results = JsonConvert.DeserializeObject<List<AcademyClaimantInformation>>(content);
 
-            Console.WriteLine(results.GetType().ToString());
             return results;
         }
     }

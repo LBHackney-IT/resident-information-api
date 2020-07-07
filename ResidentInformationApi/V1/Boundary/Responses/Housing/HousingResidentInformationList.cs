@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace ResidentInformationApi.V1.Boundary.Responses
 {
-    public class ResidentInformationList
+    public class HousingResidentInformationList
     {
-        public List<ResidentInformation> Residents { get; }
+        public List<HousingResidentInformation> Residents { get; }
 
         public string NextCursor { get; set; }
     }

@@ -4,16 +4,16 @@ using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using Address = ResidentInformationApi.V1.Domain.Address;
 using AddressResponse = ResidentInformationApi.V1.Boundary.Responses.Address;
-using ResidentInformation = ResidentInformationApi.V1.Domain.ResidentInformation;
-using ResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.ResidentInformation;
+using HousingResidentInformation = ResidentInformationApi.V1.Domain.HousingResidentInformation;
+using HousingResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
 
 namespace ResidentInformationApi.V1.Factories
 {
     public static class ResponseFactory
     {
-        public static ResidentInformationResponse ToResponse(this ResidentInformation domain)
+        public static HousingResidentInformationResponse ToResponse(this HousingResidentInformation domain)
         {
-            return new ResidentInformationResponse
+            return new HousingResidentInformationResponse
             {
                 // System = "academy", //TODO
                 // SystemId = "123456", //TODO
@@ -27,7 +27,7 @@ namespace ResidentInformationApi.V1.Factories
                 PhoneNumber = domain.PhoneNumberList?.ToResponse()
             };
         }
-        public static List<ResidentInformationResponse> ToResponse(this IEnumerable<ResidentInformation> residents)
+        public static List<HousingResidentInformationResponse> ToResponse(this IEnumerable<HousingResidentInformation> residents)
         {
             return residents.Select(r => r.ToResponse()).ToList();
         }

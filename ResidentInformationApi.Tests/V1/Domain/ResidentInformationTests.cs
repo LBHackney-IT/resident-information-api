@@ -26,7 +26,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
                 PostCode = "AB1 2BC",
             };
 
-            var residentInformation = new ResidentInformation
+            var residentInformation = new HousingResidentInformation
             {
 
                 FirstName = "First",

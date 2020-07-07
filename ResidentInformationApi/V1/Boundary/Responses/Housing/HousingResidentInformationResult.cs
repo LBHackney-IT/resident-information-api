@@ -1,6 +1,6 @@
 namespace ResidentInformationApi.V1.Boundary.Responses
 {
-    public class ResidentInformationResult
+    public class HousingResidentInformationResult
     {
         /// <example>
         /// academy
@@ -14,6 +14,6 @@ namespace ResidentInformationApi.V1.Boundary.Responses
         /// https://academy-api.hackney.gov.uk
         /// </example>
         public System.Uri SystemUrl { get; set; }
-        public ResidentInformation ResidentInformation { get; set; }
+        public HousingResidentInformation ResidentInformation { get; set; }
     };
 };

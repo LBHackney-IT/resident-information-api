@@ -3,7 +3,7 @@ using ResidentInformationApi.V1.Boundary.Responses;
 
 namespace ResidentInformationApi.V1.Domain
 {
-    public class ResidentInformation
+    public class HousingResidentInformation
     {
         public string HouseReference { get; set; }
         public string PersonNumber { get; set; }
