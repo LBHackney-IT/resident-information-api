@@ -71,23 +71,18 @@ Documentation on how to do this can be found [here](https://docs.microsoft.com/e
 $ make test
 ```
 
-To run database tests locally (e.g. via Visual Studio) the `CONNECTION_STRING` environment variable will need to be populated with:
-
-`Host=localhost;Database=entitycore;Username=postgres;Password=mypassword"`
-
-Note: The Host name needs to be the name of the stub database docker-compose service, in order to run tests via Docker.
-
 ### Agreed Testing Approach
-- Use nUnit, FluentAssertions and Moq
-- Always follow a TDD approach
-- Tests should be independent of each other
-- Gateway tests should interact with a real test instance of the database
-- Test coverage should never go down
-- All use cases should be covered by E2E tests
-- Optimise when test run speed starts to hinder development
-- Unit tests and E2E tests should run in CI
-- Test database schemas should match up with production database schema
-- Have integration tests which test from the PostgreSQL database to API Gateway
+
+-   Use nUnit, FluentAssertions and Moq
+-   Always follow a TDD approach
+-   Tests should be independent of each other
+-   Gateway tests should interact with a real test instance of the database (if any)
+-   Test coverage should never go down
+-   All use cases should be covered by E2E tests
+-   Optimise when test run speed starts to hinder development
+-   Unit tests and E2E tests should run in CI
+-   Test database schemas should match up with production database schema (if any)
+-   Have integration tests which test from the external APIs to API Gateway
 
 ## Data Migrations
 ### A good data migration
