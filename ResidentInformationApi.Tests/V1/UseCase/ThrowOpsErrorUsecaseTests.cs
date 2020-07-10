@@ -1,6 +1,6 @@
-using ResidentInformationApi.V1.UseCase;
 using FluentAssertions;
 using NUnit.Framework;
+using ResidentInformationApi.V1.UseCase;
 
 namespace ResidentInformationApi.Tests.V1.UseCase
 {
