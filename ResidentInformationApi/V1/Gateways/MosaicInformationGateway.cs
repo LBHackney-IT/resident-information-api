@@ -9,24 +9,24 @@ using ResidentInformationApi.V1.Gateways.Helpers;
 
 namespace ResidentInformationApi.V1.Gateways
 {
-    public class AcademyInformationGateway : IAcademyInformationGateway
+    public class MosaicInformationGateway : IMosaicInformationGateway
     {
         private readonly HttpClient _client;
         private readonly string _baseUrl;
 
-        public AcademyInformationGateway(HttpClient client)
+        public MosaicInformationGateway(HttpClient client)
         {
             _client = client;
-            _baseUrl = Environment.GetEnvironmentVariable("ACADEMY_API_ENDPOINT");
+            _baseUrl = Environment.GetEnvironmentVariable("MOSAIC_API_ENDPOINT");
         }
-        public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
+        public async Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
         {
             var rqpString = DictionaryBuilder.BuildQueryDictionary(rqp);
             var builder = new UriBuilder(_baseUrl);
             builder.Query = rqpString;
             var response = await _client.PostAsync(builder.Uri, null).ConfigureAwait(true);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-            var results = JsonConvert.DeserializeObject<List<AcademyClaimantInformation>>(content);
+            var results = JsonConvert.DeserializeObject<List<MosaicResidentInformation>>(content);
 
             return results;
         }

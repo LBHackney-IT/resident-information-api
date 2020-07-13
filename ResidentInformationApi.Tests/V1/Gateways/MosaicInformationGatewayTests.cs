@@ -19,21 +19,21 @@ using ResidentInformationApi.V1.Gateways;
 namespace ResidentInformationApi.Tests.V1.Gateways
 {
     [TestFixture]
-    public class HousingInformationGatewayTests
+    public class MosaicInformationGatewayTests
     {
         private Fixture _fixture;
-        private HousingInformationGateway _classUnderTest;
+        private MosaicInformationGateway _classUnderTest;
         private Mock<HttpMessageHandler> _messageHandler;
         private Uri _uri;
         private string _currentEnv;
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
             _fixture = new Fixture();
             _uri = new Uri("http://test-domain-name.com/");
-            _currentEnv = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
-            Environment.SetEnvironmentVariable("HOUSING_API_ENDPOINT", _uri.OriginalString);
+            _currentEnv = Environment.GetEnvironmentVariable("MOSAIC_API_ENDPOINT");
+            Environment.SetEnvironmentVariable("MOSAIC_API_ENDPOINT", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
             var httpClient = new HttpClient(_messageHandler.Object)
@@ -41,13 +41,13 @@ namespace ResidentInformationApi.Tests.V1.Gateways
                 BaseAddress = _uri,
             };
 
-            _classUnderTest = new HousingInformationGateway(httpClient);
+            _classUnderTest = new MosaicInformationGateway(httpClient);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Environment.SetEnvironmentVariable("HOUSING_API_ENDPOINT", _currentEnv);
+            Environment.SetEnvironmentVariable("MOSAIC_API_ENDPOINT", _currentEnv);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetResidentInformationReturnsArrayOfResidentInformationObjects()
         {
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
-            var expected = new List<HousingResidentInformation> { _fixture.Create<HousingResidentInformation>() };
+            var expected = new List<MosaicResidentInformation> { _fixture.Create<MosaicResidentInformation>() };
             var expectedJson = JsonConvert.SerializeObject(expected);
             TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "?address=" + rqp.Address, expectedJson);
 

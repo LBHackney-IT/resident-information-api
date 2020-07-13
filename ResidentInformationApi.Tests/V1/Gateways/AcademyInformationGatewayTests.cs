@@ -11,8 +11,9 @@ using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using ResidentInformationApi.Tests.V1.Helper;
 using ResidentInformationApi.V1.Boundary.Requests;
-using ResidentInformationApi.V1.Boundary.Responses;
+using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Gateways;
 
 namespace ResidentInformationApi.Tests.V1.Gateways
@@ -24,7 +25,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private AcademyInformationGateway _classUnderTest;
         private Mock<HttpMessageHandler> _messageHandler;
         private Uri _uri;
-        private String _currentEnv;
+        private string _currentEnv;
 
         [SetUp]
         public void SetUp()
@@ -53,7 +54,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetClaimantInformationReturnsEmptyArrayIfNoResultsFound()
         {
             var rqp = new ResidentQueryParam();
-            SetUpMessageHandlerToReturnJson(expectedJsonString: "[]");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, expectedJsonString: "[]");
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 
             received.Should().BeEmpty();
@@ -67,38 +68,12 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
             var expected = new List<AcademyClaimantInformation> { _fixture.Create<AcademyClaimantInformation>() };
             var expectedJson = JsonConvert.SerializeObject(expected);
-            SetUpMessageHandlerToReturnJson("?address=" + rqp.Address, expectedJson);
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "?address=" + rqp.Address, expectedJson);
 
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 
             _messageHandler.Verify();
             received.Should().BeEquivalentTo(expected);
-        }
-
-        private void SetUpMessageHandlerToReturnJson(string rqpString = null, string expectedJsonString = null)
-        {
-            if (expectedJsonString == null)
-            {
-                expectedJsonString = _fixture.Create<String>();
-            }
-            var stubbedResponse = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(expectedJsonString)
-            };
-
-            _messageHandler
-                .Protected()
-                .Setup<Task<HttpResponseMessage>>(
-                    "SendAsync",
-                    ItExpr.Is<HttpRequestMessage>(
-                        req => HttpUtility.UrlDecode(
-                            req.RequestUri.ToString()
-                            ) == "http://test-domain-name.com/" + rqpString),
-                    ItExpr.IsAny<CancellationToken>()
-                    )
-                .ReturnsAsync(stubbedResponse)
-                .Verifiable();
         }
     }
 }

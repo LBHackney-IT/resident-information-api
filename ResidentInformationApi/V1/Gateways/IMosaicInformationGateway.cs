@@ -5,8 +5,8 @@ using ResidentInformationApi.V1.Domain;
 
 namespace ResidentInformationApi.V1.Gateways
 {
-    public interface IAcademyInformationGateway
+    public interface IMosaicInformationGateway
     {
-        Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp);
+        Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp);
     }
 }
