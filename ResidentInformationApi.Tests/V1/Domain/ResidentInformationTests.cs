@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using ResidentInformationApi.V1.Domain;
-using PhoneType = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
 
 namespace ResidentInformationApi.Tests.V1.Domain
 {

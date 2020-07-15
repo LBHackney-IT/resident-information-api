@@ -10,3 +10,4 @@ namespace ResidentInformationApi.V1.Gateways
         Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp);
     }
 }
+

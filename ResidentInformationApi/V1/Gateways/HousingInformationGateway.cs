@@ -29,7 +29,6 @@ namespace ResidentInformationApi.V1.Gateways
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             var results = JsonConvert.DeserializeObject<List<HousingResidentInformation>>(content);
 
-            Console.WriteLine(results.GetType().ToString());
             return results;
         }
     }

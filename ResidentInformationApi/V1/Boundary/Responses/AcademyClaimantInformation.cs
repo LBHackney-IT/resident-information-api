@@ -1,6 +1,6 @@
 namespace ResidentInformationApi.V1.Boundary.Responses
 {
-    public class AcademyClaimantInformation
+    public class AcademyClaimantInformation : IResidentData
     {
         public int ClaimId { get; set; }
         public int PersonRef { get; set; }
@@ -10,5 +10,7 @@ namespace ResidentInformationApi.V1.Boundary.Responses
 
         public string NINumber { get; set; }
         public Address ClaimantAddress { get; set; }
+        public string CheckDigit { get; set; }
+
     }
 }

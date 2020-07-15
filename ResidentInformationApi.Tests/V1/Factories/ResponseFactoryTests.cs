@@ -1,24 +1,70 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Factories;
+using AcademyClaimantInformation = ResidentInformationApi.V1.Domain.AcademyClaimantInformation;
+using AcademyClaimantInformationResponse = ResidentInformationApi.V1.Boundary.Responses.AcademyClaimantInformation;
 using Address = ResidentInformationApi.V1.Domain.Address;
 using AddressResponse = ResidentInformationApi.V1.Boundary.Responses.Address;
-using Domain = ResidentInformationApi.V1.Domain.HousingResidentInformation;
-using HousingResidentInformation = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
-using HousingResidentInformationResult = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformationResult;
+using HousingResidentInformation = ResidentInformationApi.V1.Domain.HousingResidentInformation;
+using HousingResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
+using MosaicResidentInformation = ResidentInformationApi.V1.Domain.MosaicResidentInformation;
+using MosaicResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.MosaicResidentInformation;
 using PhoneNumberResponse = ResidentInformationApi.V1.Boundary.Responses.Phone;
+using PhoneType = ResidentInformationApi.V1.Domain.PhoneType;
+using PhoneTypeResponse = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
 
-namespace MosaicResidentInformationApi.Tests.V1.Factories
+namespace ResidentInformationApi.Tests.V1.Factories
 {
     public class ResponseFactoryTests
     {
         [Test]
-        public void CanMapResidentInformationFromDomainToResponse()
+        public void CanMapAcademyInformationFromDomainToResponse()
         {
-            var domain = new Domain
+            var domain = new AcademyClaimantInformation
+            {
+                ClaimId = 123,
+                PersonRef = 456,
+                FirstName = "First",
+                LastName = "Last",
+                DateOfBirth = "01/01/2001",
+                NINumber = "NI123456N",
+                ClaimantAddress = new Address
+                {
+                    AddressLine1 = "addess11",
+                    AddressLine2 = "address22",
+                    AddressLine3 = "address33",
+                    PostCode = "Postcode"
+                },
+                CheckDigit = "Digit"
+            };
+
+            var expectedResponse = new AcademyClaimantInformationResponse
+            {
+                ClaimId = 123,
+                PersonRef = 456,
+                FirstName = "First",
+                LastName = "Last",
+                DateOfBirth = "01/01/2001",
+                NINumber = "NI123456N",
+                ClaimantAddress = new AddressResponse
+                {
+                    AddressLine1 = "addess11",
+                    AddressLine2 = "address22",
+                    AddressLine3 = "address33",
+                    PostCode = "Postcode"
+                },
+                CheckDigit = "Digit"
+            };
+
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
+
+        }
+        [Test]
+        public void CanMapHousingInformationFromDomainToResponse()
+        {
+            var domain = new HousingResidentInformation
             {
                 Uprn = "uprn",
                 AddressList = new List<Address>
@@ -45,46 +91,40 @@ namespace MosaicResidentInformationApi.Tests.V1.Factories
                 },
             };
 
-            var expectedResponse = new HousingResidentInformationResult
+            var expectedResponse = new HousingResidentInformationResponse
             {
-                System = "academy",
-                SystemId = "123456",
-                SystemUrl = new System.Uri("https://academy-api.hackney.gov.uk"),
-                ResidentInformation = new HousingResidentInformation
+                Uprn = "uprn",
+                AddressList = new List<AddressResponse>
                 {
-                    Uprn = "uprn",
-                    AddressList = new List<AddressResponse>
+                    new AddressResponse()
                     {
-                        new AddressResponse()
-                        {
-                            AddressLine1 = "addess11",
-                            AddressLine2 = "address22",
-                            AddressLine3 = "address33",
-                            PostCode = "Postcode"
-                        }
-                    },
-                    FirstName = "Name",
-                    LastName = "Last",
-                    NhsNumber = "nhs",
-                    DateOfBirth = "DOB",
-                    PhoneNumber = new List<PhoneNumberResponse>
-                    {
-                        new PhoneNumberResponse
-                        {
-                            PhoneNumber = "number",
-                            PhoneType = PhoneType.Fax
-                        }
+                        AddressLine1 = "addess11",
+                        AddressLine2 = "address22",
+                        AddressLine3 = "address33",
+                        PostCode = "Postcode"
                     }
                 },
+                FirstName = "Name",
+                LastName = "Last",
+                NhsNumber = "nhs",
+                DateOfBirth = "DOB",
+                PhoneNumber = new List<PhoneNumberResponse>
+                {
+                    new PhoneNumberResponse
+                    {
+                        PhoneNumber = "number",
+                        PhoneType = PhoneTypeResponse.Fax
+                    }
+                }
             };
 
-            domain.ToResponse().Should().BeEquivalentTo(expectedResponse.ResidentInformation);
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
         }
 
         [Test]
-        public void CanMapResidentInformationWithOnlyPersonalInformationFromDomainToResponse()
+        public void CanMapHousingInformationWithOnlyPersonalInformationFromDomainToResponse()
         {
-            var domain = new Domain
+            var domain = new HousingResidentInformation
             {
                 Uprn = "uprn",
                 AddressList = null,
@@ -95,24 +135,110 @@ namespace MosaicResidentInformationApi.Tests.V1.Factories
                 PhoneNumberList = null,
             };
 
-            var expectedResponse = new HousingResidentInformationResult
+            var expectedResponse = new HousingResidentInformationResponse
             {
-                System = "academy",
-                SystemId = "123456",
-                SystemUrl = new System.Uri("https://academy-api.hackney.gov.uk"),
-                ResidentInformation = new HousingResidentInformation
-                {
-                    Uprn = "uprn",
-                    AddressList = null,
-                    FirstName = "Name",
-                    LastName = "Last",
-                    NhsNumber = "nhs",
-                    DateOfBirth = "DOB",
-                    PhoneNumber = null,
-                }
+                Uprn = "uprn",
+                AddressList = null,
+                FirstName = "Name",
+                LastName = "Last",
+                NhsNumber = "nhs",
+                DateOfBirth = "DOB",
+                PhoneNumber = null
             };
 
-            domain.ToResponse().Should().BeEquivalentTo(expectedResponse.ResidentInformation);
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
+        }
+
+        [Test]
+        public void CanMapMosaicInformationFromDomainToResponse()
+        {
+            var domain = new MosaicResidentInformation
+            {
+                MosaicId = "123",
+                FirstName = "First",
+                LastName = "Last",
+                Uprn = "100000000",
+                DateOfBirth = "01/01/2001",
+                PhoneNumberList = new List<PhoneNumber>
+                {
+                    new PhoneNumber
+                    {
+                        Number = "07894564561",
+                        Type = PhoneType.Home
+                    }
+                },
+                AddressList = new List<Address>
+                {
+                    new Address
+                    {
+                        AddressLine1 = "addess11",
+                        AddressLine2 = "address22",
+                        AddressLine3 = "address33",
+                        PostCode = "Postcode"
+                    }
+                },
+                NhsNumber = "2000000000"
+            };
+
+            var expectedResponse = new MosaicResidentInformationResponse
+            {
+                MosaicId = "123",
+                FirstName = "First",
+                LastName = "Last",
+                Uprn = "100000000",
+                DateOfBirth = "01/01/2001",
+                PhoneNumber = new List<PhoneNumberResponse>
+                {
+                    new PhoneNumberResponse
+                    {
+                        PhoneNumber = "07894564561",
+                        PhoneType = PhoneTypeResponse.Home
+                    }
+                },
+                AddressList = new List<AddressResponse>
+                {
+                    new AddressResponse
+                    {
+                        AddressLine1 = "addess11",
+                        AddressLine2 = "address22",
+                        AddressLine3 = "address33",
+                        PostCode = "Postcode"
+                    }
+                },
+                NhsNumber = "2000000000"
+            };
+
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
+        }
+        [Test]
+        public void CanMapMosaicInformationWithOnlyPersonalInformationFromDomainToResponse()
+        {
+            var domain = new MosaicResidentInformation
+            {
+                MosaicId = "123",
+                FirstName = "First",
+                LastName = "Last",
+                Uprn = "100000000",
+                DateOfBirth = "01/01/2001",
+                AddressList = null,
+                PhoneNumberList = null,
+                NhsNumber = "2000000000"
+
+            };
+
+            var expectedResponse = new MosaicResidentInformationResponse
+            {
+                MosaicId = "123",
+                FirstName = "First",
+                LastName = "Last",
+                Uprn = "100000000",
+                DateOfBirth = "01/01/2001",
+                AddressList = null,
+                PhoneNumber = null,
+                NhsNumber = "2000000000"
+            };
+
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
         }
     }
 }

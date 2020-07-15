@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ResidentInformationApi.V1.Boundary.Responses
 {
-    public class MosaicResidentInformation
+    public class MosaicResidentInformation : IResidentData
     {
         /// <example>
         /// abc123
