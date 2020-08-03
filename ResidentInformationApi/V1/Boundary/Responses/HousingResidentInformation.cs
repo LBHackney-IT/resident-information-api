@@ -2,8 +2,13 @@ using System.Collections.Generic;
 
 namespace ResidentInformationApi.V1.Boundary.Responses
 {
-    public class HousingResidentInformation
+    public class HousingResidentInformation : IResidentData
     {
+        public string HouseReference { get; set; }
+        public string PersonNumber { get; set; }
+        public string TenancyReference { get; set; }
+        public string NationalInsuranceNumber { get; set; }
+
         /// <example>
         /// Ciasom
         /// </example>
@@ -25,6 +30,7 @@ namespace ResidentInformationApi.V1.Boundary.Responses
         /// <example>
         /// 450 557 7104
         /// </example>
+        public List<Email> EmailAddressList { get; set; }
         public string NhsNumber { get; set; }
     }
 }

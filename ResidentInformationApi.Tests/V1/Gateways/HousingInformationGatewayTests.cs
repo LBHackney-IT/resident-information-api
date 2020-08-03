@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
-using Moq.Protected;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using ResidentInformationApi.Tests.V1.Helper;
@@ -65,7 +60,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetResidentInformationReturnsArrayOfResidentInformationObjects()
         {
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
-            var expected = new List<HousingResidentInformation> { _fixture.Create<HousingResidentInformation>() };
+            var expected = _fixture.CreateMany<HousingResidentInformation>();
             var expectedJson = JsonConvert.SerializeObject(expected);
             TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "?address=" + rqp.Address, expectedJson);
 
