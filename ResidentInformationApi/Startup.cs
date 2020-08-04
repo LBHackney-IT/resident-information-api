@@ -101,8 +101,11 @@ namespace ResidentInformationApi
                 if (File.Exists(xmlPath))
                     c.IncludeXmlComments(xmlPath);
             });
+
+            RegisterGateways(services);
             RegisterUseCases(services);
             RegisterGateways(services);
+            RegisterHTTPClients(services);
         }
 
         private static void RegisterUseCases(IServiceCollection services)
@@ -117,6 +120,16 @@ namespace ResidentInformationApi
             services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>();
         }
 
+        private static void RegisterGateways(IServiceCollection services)
+        {
+            services.AddScoped<IAcademyInformationGateway, AcademyInformationGateway>();
+            services.AddScoped<IHousingInformationGateway, HousingInformationGateway>();
+            services.AddScoped<IMosaicInformationGateway, MosaicInformationGateway>();
+        }
+        private static void RegisterHTTPClients(IServiceCollection services)
+        {
+            services.AddHttpClient();
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
