@@ -7,8 +7,6 @@ namespace ResidentInformationApi.V1.Gateways
 {
     public interface IMosaicInformationGateway
     {
-        string BaseAddress
-        { get; }
         Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp);
     }
 }

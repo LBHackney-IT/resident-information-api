@@ -43,9 +43,9 @@ namespace ResidentInformationApi.Tests.V1.UseCase
             _housingUrl = "http://HOUSING_API_URL";
             _mosaicUrl = "http://MOSAIC_API_URL";
 
-            Environment.SetEnvironmentVariable("ACADEMY_API_URL", _academyUrl);
-            Environment.SetEnvironmentVariable("HOUSING_API_URL", _housingUrl);
-            Environment.SetEnvironmentVariable("MOSAIC_API_URL", _mosaicUrl);
+            Environment.SetEnvironmentVariable("ACADEMY_API_LIST_URL", _academyUrl);
+            Environment.SetEnvironmentVariable("HOUSING_API_LIST_URL", _housingUrl);
+            Environment.SetEnvironmentVariable("MOSAIC_API_LIST_URL", _mosaicUrl);
         }
 
         [Test]

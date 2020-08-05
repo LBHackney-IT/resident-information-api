@@ -7,8 +7,6 @@ namespace ResidentInformationApi.V1.Gateways
 {
     public interface IHousingInformationGateway
     {
-        string BaseAddress
-        { get; }
         Task<List<HousingResidentInformation>> GetResidentInformation(ResidentQueryParam rqp);
     }
 }

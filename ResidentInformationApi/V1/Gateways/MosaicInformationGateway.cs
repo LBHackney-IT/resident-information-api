@@ -13,11 +13,9 @@ namespace ResidentInformationApi.V1.Gateways
     {
         private readonly HttpClient _client;
         //private readonly string _baseUrl;
-        public string BaseAddress { get; private set; }
         public MosaicInformationGateway(HttpClient client)
         {
             _client = client;
-            BaseAddress = _client.BaseAddress.OriginalString;
             //_baseUrl = Environment.GetEnvironmentVariable("MOSAIC_API_ENDPOINT");
         }
         public async Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
