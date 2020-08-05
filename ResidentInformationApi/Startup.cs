@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ResidentInformationApi.V1.Gateways;
+using ResidentInformationApi.V1.UseCase;
 using ResidentInformationApi.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -26,8 +28,7 @@ namespace ResidentInformationApi
 
         public IConfiguration Configuration { get; }
         private static List<ApiVersionDescription> _apiVersions { get; set; }
-        //TODO update the below to the name of your API
-        private const string ApiName = "Your API Name";
+        private const string ApiName = "Resident Information API";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public static void ConfigureServices(IServiceCollection services)
@@ -101,12 +102,19 @@ namespace ResidentInformationApi
                     c.IncludeXmlComments(xmlPath);
             });
             RegisterUseCases(services);
+            RegisterGateways(services);
         }
 
         private static void RegisterUseCases(IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
-            // your usecases here
+            services.AddScoped<IListContactsUseCase, ListContactsUseCase>();
+        }
+
+        private static void RegisterGateways(IServiceCollection services)
+        {
+            services.AddHttpClient<IMosaicInformationGateway, MosaicInformationGateway>();
+            services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>();
+            services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
