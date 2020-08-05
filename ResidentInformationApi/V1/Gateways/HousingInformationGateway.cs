@@ -12,21 +12,25 @@ namespace ResidentInformationApi.V1.Gateways
     public class HousingInformationGateway : IHousingInformationGateway
     {
         private readonly HttpClient _client;
-        private readonly string _baseUrl;
+        //private readonly string _baseUrl;
         public string BaseAddress { get; private set; }
         public HousingInformationGateway(HttpClient client)
         {
             _client = client;
             BaseAddress = _client.BaseAddress.OriginalString;
-            _baseUrl = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
+            //_baseUrl = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
         }
 
         public async Task<List<HousingResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
         {
             var rqpString = DictionaryBuilder.BuildQueryDictionary(rqp);
-            var builder = new UriBuilder(_baseUrl + "api/v1/households");
+            var builder = new UriBuilder();
             builder.Query = rqpString;
-            var response = await _client.GetAsync(builder.Uri).ConfigureAwait(true);
+            var response = await _client.GetAsync(new Uri("api/v1/households" + builder.Query, UriKind.Relative)).ConfigureAwait(true);
+
+            //throw exception if not 200
+            response.EnsureSuccessStatusCode();
+
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             var results = JsonConvert.DeserializeObject<List<HousingResidentInformation>>(content);
 
