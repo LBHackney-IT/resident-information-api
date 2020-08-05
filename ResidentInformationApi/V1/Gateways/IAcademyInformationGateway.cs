@@ -7,6 +7,8 @@ namespace ResidentInformationApi.V1.Gateways
 {
     public interface IAcademyInformationGateway
     {
+        string BaseAddress
+        { get; }
         Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp);
     }
 }

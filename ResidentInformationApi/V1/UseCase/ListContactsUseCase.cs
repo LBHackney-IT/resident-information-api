@@ -31,16 +31,12 @@ namespace ResidentInformationApi.V1.UseCase
             var housingResidents = await _housingGateway.GetResidentInformation(rqp).ConfigureAwait(true);
             var mosaicResidents = await _mosaicGateway.GetResidentInformation(rqp).ConfigureAwait(true);
 
-            var academyUrl = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
-            var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_URL");
-            var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
-
             var academyResults = academyClaimants.Select(x =>
                 new ResidentInformationResult
                 {
                     System = "Academy",
                     SystemId = x.ClaimId.ToString(),
-                    SystemUrl = new Uri(academyUrl + $"/claim/{x.ClaimId}/person/{x.PersonRef}"),
+                    SystemUrl = new Uri(_academyGateway.BaseAddress + $"/claim/{x.ClaimId}/person/{x.PersonRef}"),
                     Data = x.ToResponse()
                 });
 
@@ -49,7 +45,7 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Housing",
                     SystemId = x.HouseReference.ToString(),
-                    SystemUrl = new Uri(housingUrl + $"/households/{x.HouseReference}/people/{x.PersonNumber}"),
+                    SystemUrl = new Uri(_housingGateway.BaseAddress + $"/households/{x.HouseReference}/people/{x.PersonNumber}"),
                     Data = x.ToResponse()
                 });
 
@@ -58,7 +54,7 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Mosaic",
                     SystemId = x.MosaicId.ToString(),
-                    SystemUrl = new Uri(mosaicUrl + $"/residents/{x.MosaicId}"),
+                    SystemUrl = new Uri(_mosaicGateway.BaseAddress + $"/residents/{x.MosaicId}"),
                     Data = x.ToResponse()
                 });
 

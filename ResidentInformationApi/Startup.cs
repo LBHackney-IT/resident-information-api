@@ -104,8 +104,6 @@ namespace ResidentInformationApi
 
             RegisterGateways(services);
             RegisterUseCases(services);
-            RegisterGateways(services);
-            RegisterHTTPClients(services);
         }
 
         private static void RegisterUseCases(IServiceCollection services)
@@ -115,20 +113,24 @@ namespace ResidentInformationApi
 
         private static void RegisterGateways(IServiceCollection services)
         {
-            services.AddHttpClient<IMosaicInformationGateway, MosaicInformationGateway>();
-            services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>();
-            services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>();
-        }
+            var academyUrl = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
+            var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_URL");
+            var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
 
-        private static void RegisterGateways(IServiceCollection services)
-        {
-            services.AddScoped<IAcademyInformationGateway, AcademyInformationGateway>();
-            services.AddScoped<IHousingInformationGateway, HousingInformationGateway>();
-            services.AddScoped<IMosaicInformationGateway, MosaicInformationGateway>();
-        }
-        private static void RegisterHTTPClients(IServiceCollection services)
-        {
-            services.AddHttpClient();
+            services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>(a =>
+            {
+                a.BaseAddress = new Uri(academyUrl);
+            });
+
+            services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>(a =>
+            {
+                a.BaseAddress = new Uri(housingUrl);
+            });
+
+            services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>(a =>
+            {
+                a.BaseAddress = new Uri(mosaicUrl);
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
