@@ -18,9 +18,9 @@ namespace ResidentInformationApi.Tests
         [SetUp]
         public void BaseSetup()
         {
+            ConfigureMockApis();
             _factory = new MockWebApplicationFactory<TStartup>();
             Client = _factory.CreateClient();
-            ConfigureMockApis();
         }
 
         [TearDown]
