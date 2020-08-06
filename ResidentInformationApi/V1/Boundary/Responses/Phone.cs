@@ -9,6 +9,6 @@ namespace ResidentInformationApi.V1.Boundary.Responses
         /// <example>
         /// Mobile
         /// </example>
-        public PhoneType PhoneType { get; set; }
+        public PhoneType? PhoneType { get; set; }
     }
 }

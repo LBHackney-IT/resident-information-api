@@ -40,7 +40,7 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Academy",
                     SystemId = x.ClaimId.ToString(),
-                    SystemUrl = new Uri(academyUrl + $"/claim/{x.ClaimId}/person/{x.PersonRef}"),
+                    SystemUrl = new Uri(academyUrl + $"api/v1/claimants/claim/{x.ClaimId}/person/{x.PersonRef}"),
                     Data = x.ToResponse()
                 });
 
@@ -49,7 +49,7 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Housing",
                     SystemId = x.HouseReference.ToString(),
-                    SystemUrl = new Uri(housingUrl + $"/households/{x.HouseReference}/people/{x.PersonNumber}"),
+                    SystemUrl = new Uri(housingUrl + $"api/v1/households/{x.HouseReference}/people/{x.PersonNumber}"),
                     Data = x.ToResponse()
                 });
 
@@ -58,13 +58,12 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Mosaic",
                     SystemId = x.MosaicId.ToString(),
-                    SystemUrl = new Uri(mosaicUrl + $"/residents/{x.MosaicId}"),
+                    SystemUrl = new Uri(mosaicUrl + $"api/v1/residents/{x.MosaicId}"),
                     Data = x.ToResponse()
                 });
 
             var allResults = academyResults.Concat(housingResults.Concat(mosaicResults));
 
-            Console.WriteLine(mosaicResults);
             return new ResidentInformationResponse
             {
                 Results = allResults.ToList()

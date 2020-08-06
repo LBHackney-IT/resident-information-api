@@ -15,26 +15,10 @@ namespace ResidentInformationApi.Tests
         protected WireMockServer MockMosaicApi { get; private set; }
         private MockWebApplicationFactory<TStartup> _factory;
 
-        [OneTimeSetUp]
-        public void StartMockApiServers()
-        {
-            ConfigureMockApis();
-        }
-
-        [OneTimeTearDown]
-        public void StopMockApiServers()
-        {
-            MockAcademyAPI.Stop();
-            MockAcademyAPI.Dispose();
-            MockHousingApi.Stop();
-            MockHousingApi.Dispose();
-            MockMosaicApi.Stop();
-            MockMosaicApi.Dispose();
-        }
-
         [SetUp]
         public void BaseSetup()
         {
+            ConfigureMockApis();
             _factory = new MockWebApplicationFactory<TStartup>();
             Client = _factory.CreateClient();
         }
@@ -44,6 +28,12 @@ namespace ResidentInformationApi.Tests
         {
             Client.Dispose();
             _factory.Dispose();
+            MockAcademyAPI.Stop();
+            MockAcademyAPI.Dispose();
+            MockHousingApi.Stop();
+            MockHousingApi.Dispose();
+            MockMosaicApi.Stop();
+            MockMosaicApi.Dispose();
         }
 
         private void ConfigureMockApis()
