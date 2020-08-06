@@ -10,6 +10,7 @@ using ResidentInformationApi.Tests.V1.Helper;
 using ResidentInformationApi.V1.Boundary.Requests;
 using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Gateways;
+using System.Collections.Generic;
 
 namespace ResidentInformationApi.Tests.V1.Gateways
 {
@@ -27,8 +28,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         {
             _fixture = new Fixture();
             _uri = new Uri("http://test-domain-name.com/");
-            _currentEnv = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
-            Environment.SetEnvironmentVariable("HOUSING_API_ENDPOINT", _uri.OriginalString);
+            _currentEnv = Environment.GetEnvironmentVariable("HOUSING_API_URL");
+            Environment.SetEnvironmentVariable("HOUSING_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
             var httpClient = new HttpClient(_messageHandler.Object)
@@ -42,7 +43,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         [TearDown]
         public void TearDown()
         {
-            Environment.SetEnvironmentVariable("HOUSING_API_ENDPOINT", _currentEnv);
+            Environment.SetEnvironmentVariable("HOUSING_API_URL", _currentEnv);
         }
 
         [Test]
@@ -68,6 +69,16 @@ namespace ResidentInformationApi.Tests.V1.Gateways
 
             _messageHandler.Verify();
             received.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public async Task GetResidentInformationThrowsErrorIfAPIReturnsBadRequest()
+        {
+            var rqp = new ResidentQueryParam();
+            TestHelper.SetUpMessageHandlerToReturnErrorCode(_messageHandler);
+            Func<Task<List<HousingResidentInformation>>> testFunction = () => _classUnderTest.GetResidentInformation(rqp);
+
+            await testFunction.Should().ThrowAsync<HttpRequestException>().ConfigureAwait(true);
         }
     }
 }

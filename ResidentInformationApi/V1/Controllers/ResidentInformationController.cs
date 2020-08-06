@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ResidentInformationApi.V1.Boundary.Requests;
@@ -27,6 +28,10 @@ namespace ResidentInformationApi.V1.Controllers
                 return Ok(response);
             }
             catch (InvalidQueryParameterException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (HttpRequestException e)
             {
                 return BadRequest(e.Message);
             }

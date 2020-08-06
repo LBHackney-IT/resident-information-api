@@ -51,9 +51,9 @@ namespace ResidentInformationApi.Tests
             MockAcademyAPI = WireMockServer.Start();
             MockHousingApi = WireMockServer.Start();
             MockMosaicApi = WireMockServer.Start();
-            Environment.SetEnvironmentVariable("ACADEMY_API_ENDPOINT", $"http://localhost:{MockAcademyAPI.Ports[0]}/");
-            Environment.SetEnvironmentVariable("HOUSING_API_ENDPOINT", $"http://localhost:{MockHousingApi.Ports[0]}/");
-            Environment.SetEnvironmentVariable("MOSAIC_API_ENDPOINT", $"http://localhost:{MockMosaicApi.Ports[0]}/");
+            Environment.SetEnvironmentVariable("ACADEMY_API_URL", $"http://localhost:{MockAcademyAPI.Ports[0]}/");
+            Environment.SetEnvironmentVariable("HOUSING_API_URL", $"http://localhost:{MockHousingApi.Ports[0]}/");
+            Environment.SetEnvironmentVariable("MOSAIC_API_URL", $"http://localhost:{MockMosaicApi.Ports[0]}/");
         }
     }
 }
