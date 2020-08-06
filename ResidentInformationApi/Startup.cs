@@ -104,6 +104,7 @@ namespace ResidentInformationApi
 
             RegisterGateways(services);
             RegisterUseCases(services);
+            RegisterHTTPClients(services);
         }
 
         private static void RegisterUseCases(IServiceCollection services)
