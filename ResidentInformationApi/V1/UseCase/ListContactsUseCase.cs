@@ -31,9 +31,9 @@ namespace ResidentInformationApi.V1.UseCase
             var housingResidents = await _housingGateway.GetResidentInformation(rqp).ConfigureAwait(true);
             var mosaicResidents = await _mosaicGateway.GetResidentInformation(rqp).ConfigureAwait(true);
 
-            var academyUrl = Environment.GetEnvironmentVariable("ACADEMY_API_LIST_URL");
-            var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_LIST_URL");
-            var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_LIST_URL");
+            var academyUrl = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
+            var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_URL");
+            var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
 
             var academyResults = academyClaimants.Select(x =>
                 new ResidentInformationResult

@@ -15,7 +15,6 @@ namespace ResidentInformationApi.V1.Gateways
         public AcademyInformationGateway(HttpClient client)
         {
             _client = client;
-            //_baseUrl = Environment.GetEnvironmentVariable("ACADEMY_API_ENDPOINT");
         }
         public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
         {

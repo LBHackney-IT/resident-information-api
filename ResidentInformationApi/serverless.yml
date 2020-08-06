@@ -23,9 +23,9 @@ functions:
     handler: ResidentInformationApi::ResidentInformationApi.LambdaEntryPoint::FunctionHandlerAsync
     role: lambdaExecutionRole
     environments:
-      ACADEMY_API_LIST_URL: ${ssm:/apiurls/academyapi-url}
-      HOUSING_API_LIST_URL: ${ssm:/apiurls/housingapi-url}
-      MOSAIC_API_LIST_URL: ${ssm:/apiurls/mosaicapi-url}
+      ACADEMY_API_URL: ${ssm:/apiurls/academyapi-url}
+      HOUSING_API_URL: ${ssm:/apiurls/housingapi-url}
+      MOSAIC_API_URL: ${ssm:/apiurls/mosaicapi-url}
     events:
       - http:
           path: /{proxy+}

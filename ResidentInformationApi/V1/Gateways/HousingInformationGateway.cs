@@ -16,7 +16,6 @@ namespace ResidentInformationApi.V1.Gateways
         public HousingInformationGateway(HttpClient client)
         {
             _client = client;
-            //_baseUrl = Environment.GetEnvironmentVariable("HOUSING_API_ENDPOINT");
         }
 
         public async Task<List<HousingResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
