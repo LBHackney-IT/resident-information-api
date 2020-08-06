@@ -127,7 +127,7 @@ namespace ResidentInformationApi
                 a.BaseAddress = new Uri(housingUrl);
             });
 
-            services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>(a =>
+            services.AddHttpClient<IMosaicInformationGateway, MosaicInformationGateway>(a =>
             {
                 a.BaseAddress = new Uri(mosaicUrl);
             });

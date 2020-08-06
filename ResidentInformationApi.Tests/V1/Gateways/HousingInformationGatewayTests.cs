@@ -10,6 +10,7 @@ using ResidentInformationApi.Tests.V1.Helper;
 using ResidentInformationApi.V1.Boundary.Requests;
 using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Gateways;
+using System.Collections.Generic;
 
 namespace ResidentInformationApi.Tests.V1.Gateways
 {
@@ -68,6 +69,16 @@ namespace ResidentInformationApi.Tests.V1.Gateways
 
             _messageHandler.Verify();
             received.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public async Task GetResidentInformationThrowsErrorIfAPIReturnsBadRequest()
+        {
+            var rqp = new ResidentQueryParam();
+            TestHelper.SetUpMessageHandlerToReturnErrorCode(_messageHandler);
+            Func<Task<List<HousingResidentInformation>>> testFunction = () => _classUnderTest.GetResidentInformation(rqp);
+
+            await testFunction.Should().ThrowAsync<HttpRequestException>().ConfigureAwait(true);
         }
     }
 }

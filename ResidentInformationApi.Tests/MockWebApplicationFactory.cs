@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace ResidentInformationApi.Tests
 {
