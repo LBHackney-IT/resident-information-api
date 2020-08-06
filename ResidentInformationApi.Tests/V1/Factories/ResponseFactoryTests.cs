@@ -67,22 +67,21 @@ namespace ResidentInformationApi.Tests.V1.Factories
             var domain = new HousingResidentInformation
             {
                 Uprn = "uprn",
-                Address = new Address
+                Address = new HousingAddress()
                 {
                     AddressLine1 = "addess11",
-                    AddressLine2 = "address22",
-                    AddressLine3 = "address33",
+                    PropertyRef = "my prop ref",
                     PostCode = "Postcode"
                 },
                 FirstName = "Name",
                 LastName = "Last",
                 DateOfBirth = "DOB",
-                PhoneNumber = new List<Phone>
+                PhoneNumber = new List<HousingPhone>
                 {
-                    new Phone()
+                    new HousingPhone()
                     {
                         PhoneNumber = "number",
-                        PhoneType = PhoneType.Fax.ToString()
+                        PhoneType = HousingPhoneTypeEnum.F
                     }
                 },
             };
@@ -93,8 +92,6 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 Address = new AddressResponse()
                 {
                     AddressLine1 = "addess11",
-                    AddressLine2 = "address22",
-                    AddressLine3 = "address33",
                     PostCode = "Postcode"
                 },
                 FirstName = "Name",

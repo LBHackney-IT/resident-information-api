@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
-using ResidentInformationApi.V1.Gateways;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
@@ -18,6 +17,7 @@ using HousingResidentInformation = ResidentInformationApi.V1.Boundary.Responses.
 using MosaicResidentInformation = ResidentInformationApi.V1.Boundary.Responses.MosaicResidentInformation;
 using Phone = ResidentInformationApi.V1.Boundary.Responses.Phone;
 using PhoneType = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
+using ResidentInformationApi.V1.Factories;
 
 namespace ResidentInformationApi.Tests.V1.E2ETests
 {
@@ -72,8 +72,6 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
                     Address = new Address
                     {
                         AddressLine1 = h.Address.AddressLine1,
-                        AddressLine2 = h.Address.AddressLine2,
-                        AddressLine3 = h.Address.AddressLine3,
                         PostCode = h.Address.PostCode,
                     },
                     FirstName = h.FirstName,
@@ -85,7 +83,7 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
                     PhoneNumber = h.PhoneNumber.Select(p => new Phone
                     {
                         PhoneNumber = p.PhoneNumber,
-                        PhoneType = PhoneType.Unknown
+                        PhoneType = p.PhoneType.ToResponse()
                     }).ToList(),
                     TenancyReference = h.TenancyReference,
                     DateOfBirth = h.DateOfBirth,
@@ -137,7 +135,7 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
                 {
                     Uprn = r.Uprn,
                     AddressList =
-                        r.AddressList.Select(a => new ResidentInformationApi.V1.Boundary.Responses.Address
+                        r.AddressList.Select(a => new Address
                         {
                             AddressLine1 = a.AddressLine1,
                             AddressLine2 = a.AddressLine2,

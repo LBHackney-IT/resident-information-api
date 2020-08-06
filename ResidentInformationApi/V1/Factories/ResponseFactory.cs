@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using AcademyClaimantInformation = ResidentInformationApi.V1.Domain.AcademyClaimantInformation;
 using AcademyClaimantInformationResponse = ResidentInformationApi.V1.Boundary.Responses.AcademyClaimantInformation;
 using Address = ResidentInformationApi.V1.Domain.Address;
 using AddressResponse = ResidentInformationApi.V1.Boundary.Responses.Address;
-using Email = ResidentInformationApi.V1.Domain.Email;
 using EmailResponse = ResidentInformationApi.V1.Boundary.Responses.Email;
 using HousingResidentInformation = ResidentInformationApi.V1.Domain.HousingResidentInformation;
 using HousingResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
 using MosaicResidentInformation = ResidentInformationApi.V1.Domain.MosaicResidentInformation;
 using MosaicResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.MosaicResidentInformation;
 using Phone = ResidentInformationApi.V1.Domain.Phone;
-using PhoneType = ResidentInformationApi.V1.Domain.PhoneType;
 using PhoneTypeResponse = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
 
 namespace ResidentInformationApi.V1.Factories
@@ -74,8 +70,22 @@ namespace ResidentInformationApi.V1.Factories
             return phoneNumbers.Select(r => r.ToResponse()).ToList();
         }
 
+        private static List<Boundary.Responses.Phone> ToResponse(this List<HousingPhone> phoneNumbers)
+        {
+            return phoneNumbers.Select(r => r.ToResponse()).ToList();
+        }
+
 
         private static Boundary.Responses.Phone ToResponse(this Phone phoneNumber)
+        {
+            return new Boundary.Responses.Phone
+            {
+                PhoneNumber = phoneNumber.PhoneNumber,
+                PhoneType = phoneNumber.PhoneType.ToResponse(),
+            };
+        }
+
+        private static Boundary.Responses.Phone ToResponse(this HousingPhone phoneNumber)
         {
             return new Boundary.Responses.Phone
             {
@@ -105,6 +115,25 @@ namespace ResidentInformationApi.V1.Factories
             }
         }
 
+        public static PhoneTypeResponse ToResponse(this HousingPhoneTypeEnum domain)
+        {
+            switch (domain)
+            {
+                case HousingPhoneTypeEnum.F:
+                    return PhoneTypeResponse.Fax;
+                case HousingPhoneTypeEnum.H:
+                    return PhoneTypeResponse.Home;
+                case HousingPhoneTypeEnum.M:
+                    return PhoneTypeResponse.Mobile;
+                case HousingPhoneTypeEnum.W:
+                    return PhoneTypeResponse.Work;
+                case HousingPhoneTypeEnum.X:
+                    return PhoneTypeResponse.Unknown;
+                default:
+                    return PhoneTypeResponse.Unknown;
+            }
+        }
+
         private static List<AddressResponse> ToResponse(this List<Address> addresses)
         {
             return addresses.Select(add => add.ToResponse()).ToList();
@@ -121,16 +150,12 @@ namespace ResidentInformationApi.V1.Factories
             };
         }
 
-        private static List<EmailResponse> ToResponse(this List<Email> emails)
+        private static AddressResponse ToResponse(this HousingAddress domain)
         {
-            return emails.Select(r => r.ToResponse()).ToList();
-        }
-        private static EmailResponse ToResponse(this Email domain)
-        {
-            return new EmailResponse
+            return new AddressResponse
             {
-                EmailAddress = domain.EmailAddress,
-                DateLastModified = domain.DateLastModified
+                AddressLine1 = domain.AddressLine1,
+                PostCode = domain.PostCode
             };
         }
 

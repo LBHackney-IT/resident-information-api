@@ -19,14 +19,36 @@ namespace ResidentInformationApi.V1.Domain
         public string LastName { get; set; }
         public string Uprn { get; set; }
         public string DateOfBirth { get; set; }
-        public List<Phone> PhoneNumber { get; set; }
-        public Address Address { get; set; }
+        public List<HousingPhone> PhoneNumber { get; set; }
+        public HousingAddress Address { get; set; }
         public List<HousingEmail> Email { get; set; }
+    }
+    public class HousingPhone
+    {
+        public string PhoneNumber { get; set; }
+        public HousingPhoneTypeEnum PhoneType { get; set; }
+        public string LastModified { get; set; }
+    }
+
+    public enum HousingPhoneTypeEnum
+    {
+        H,
+        M,
+        F,
+        W,
+        X
     }
 
     public class HousingEmail
     {
         public string EmailAddress { get; set; }
         public string LastModified { get; set; }
+    }
+
+    public class HousingAddress
+    {
+        public string PropertyRef { get; set; }
+        public string AddressLine1 { get; set; }
+        public string PostCode { get; set; }
     }
 }

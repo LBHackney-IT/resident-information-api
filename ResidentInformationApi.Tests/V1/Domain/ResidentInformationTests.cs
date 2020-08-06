@@ -11,17 +11,16 @@ namespace ResidentInformationApi.Tests.V1.Domain
         [Test]
         public void ResidentInformationIncludesRequiredProperties()
         {
-            var phoneNumber = new Phone()
+            var phoneNumber = new HousingPhone()
             {
                 PhoneNumber = "1234567890",
-                PhoneType = PhoneType.Home.ToString()
+                PhoneType = HousingPhoneTypeEnum.H
             };
 
-            var address = new Address
+            var address = new HousingAddress
             {
                 AddressLine1 = "Address Line 1",
-                AddressLine2 = "Address Line 2",
-                AddressLine3 = "Address Line 3",
+                PropertyRef = "my property ref",
                 PostCode = "AB1 2BC",
             };
 
@@ -32,7 +31,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
                 LastName = "Last",
                 Uprn = "abc123",
                 DateOfBirth = "1980-10-02",
-                PhoneNumber = new List<Phone> { phoneNumber },
+                PhoneNumber = new List<HousingPhone> { phoneNumber },
                 Address = address,
             };
 
