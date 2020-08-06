@@ -21,6 +21,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private Mock<HttpMessageHandler> _messageHandler;
         private Uri _uri;
         private string _currentEnv;
+        private HttpClient _httpClient;
 
         [SetUp]
         public void SetUp()
@@ -31,12 +32,12 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             Environment.SetEnvironmentVariable("ACADEMY_API_ENDPOINT", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
-            var httpClient = new HttpClient(_messageHandler.Object)
+            _httpClient = new HttpClient(_messageHandler.Object)
             {
                 BaseAddress = _uri,
             };
 
-            _classUnderTest = new AcademyInformationGateway(httpClient);
+            _classUnderTest = new AcademyInformationGateway(_httpClient);
         }
 
         [TearDown]
@@ -49,7 +50,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetClaimantInformationReturnsEmptyArrayIfNoResultsFound()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, expectedJsonString: "[]");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "[]");
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 
             received.Should().BeEmpty();
@@ -63,7 +64,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
             var expected = _fixture.CreateMany<AcademyClaimantInformation>();
             var expectedJson = JsonConvert.SerializeObject(expected);
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "?address=" + rqp.Address, expectedJson);
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", "?address=" + rqp.Address, expectedJson);
 
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 

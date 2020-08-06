@@ -22,9 +22,9 @@ namespace ResidentInformationApi.V1.Gateways
         public async Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
         {
             var rqpString = DictionaryBuilder.BuildQueryDictionary(rqp);
-            var builder = new UriBuilder(_baseUrl);
+            var builder = new UriBuilder(_baseUrl + "api/v1/residents");
             builder.Query = rqpString;
-            var response = await _client.PostAsync(builder.Uri, null).ConfigureAwait(true);
+            var response = await _client.GetAsync(builder.Uri).ConfigureAwait(true);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             var results = JsonConvert.DeserializeObject<List<MosaicResidentInformation>>(content);
 

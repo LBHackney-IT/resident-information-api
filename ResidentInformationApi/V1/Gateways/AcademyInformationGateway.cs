@@ -22,9 +22,11 @@ namespace ResidentInformationApi.V1.Gateways
         public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
         {
             var rqpString = DictionaryBuilder.BuildQueryDictionary(rqp);
-            var builder = new UriBuilder(_baseUrl);
-            builder.Query = rqpString;
-            var response = await _client.PostAsync(builder.Uri, null).ConfigureAwait(true);
+            var builder = new UriBuilder(_baseUrl + "api/v1/claimants")
+            {
+                Query = rqpString
+            };
+            var response = await _client.GetAsync(builder.Uri).ConfigureAwait(true);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             var results = JsonConvert.DeserializeObject<List<AcademyClaimantInformation>>(content);
 
