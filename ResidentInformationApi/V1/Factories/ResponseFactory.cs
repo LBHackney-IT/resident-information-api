@@ -97,7 +97,7 @@ namespace ResidentInformationApi.V1.Factories
                     return PhoneTypeResponse.Fax;
                 default:
                     throw new ArgumentException("Phone type is invalid");
-            };
+            }
 
         }
 
