@@ -48,7 +48,7 @@ namespace ResidentInformationApi.V1.Factories
                 NhsNumber = domain.NhsNumber,
                 DateOfBirth = domain.DateOfBirth,
                 Uprn = domain.Uprn,
-                AddressList = domain.AddressList?.ToResponse(),
+                Address = domain.Address?.ToResponse(),
                 PhoneNumber = domain.PhoneNumberList?.ToResponse(),
                 EmailAddressList = domain.EmailAddressList?.ToResponse()
             };

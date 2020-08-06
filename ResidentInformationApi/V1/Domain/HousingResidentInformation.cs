@@ -14,7 +14,7 @@ namespace ResidentInformationApi.V1.Domain
         public string DateOfBirth { get; set; }
         public string NhsNumber { get; set; }
         public List<PhoneNumber> PhoneNumberList { get; set; }
-        public List<Address> AddressList { get; set; }
+        public Address Address { get; set; }
         public List<Email> EmailAddressList { get; set; }
     }
 }

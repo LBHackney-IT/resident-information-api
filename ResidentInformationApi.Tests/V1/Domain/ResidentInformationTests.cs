@@ -33,7 +33,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
                 Uprn = "abc123",
                 DateOfBirth = "1980-10-02",
                 PhoneNumberList = new List<PhoneNumber> { phoneNumber },
-                AddressList = new List<Address> { address },
+                Address = address,
             };
 
             residentInformation.FirstName.Should().Be("First");
@@ -41,7 +41,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
             residentInformation.Uprn.Should().Be("abc123");
             residentInformation.DateOfBirth.Should().Be("1980-10-02");
             residentInformation.PhoneNumberList.Should().Contain(phoneNumber);
-            residentInformation.AddressList.Should().Contain(address);
+            residentInformation.Address.Should().BeEquivalentTo(address);
         }
     }
 }

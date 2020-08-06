@@ -67,15 +67,12 @@ namespace ResidentInformationApi.Tests.V1.Factories
             var domain = new HousingResidentInformation
             {
                 Uprn = "uprn",
-                AddressList = new List<Address>
+                Address = new Address
                 {
-                    new Address
-                    {
-                        AddressLine1 = "addess11",
-                        AddressLine2 = "address22",
-                        AddressLine3 = "address33",
-                        PostCode = "Postcode"
-                    }
+                    AddressLine1 = "addess11",
+                    AddressLine2 = "address22",
+                    AddressLine3 = "address33",
+                    PostCode = "Postcode"
                 },
                 FirstName = "Name",
                 LastName = "Last",
@@ -94,15 +91,12 @@ namespace ResidentInformationApi.Tests.V1.Factories
             var expectedResponse = new HousingResidentInformationResponse
             {
                 Uprn = "uprn",
-                AddressList = new List<AddressResponse>
+                Address = new AddressResponse()
                 {
-                    new AddressResponse()
-                    {
-                        AddressLine1 = "addess11",
-                        AddressLine2 = "address22",
-                        AddressLine3 = "address33",
-                        PostCode = "Postcode"
-                    }
+                    AddressLine1 = "addess11",
+                    AddressLine2 = "address22",
+                    AddressLine3 = "address33",
+                    PostCode = "Postcode"
                 },
                 FirstName = "Name",
                 LastName = "Last",
@@ -127,7 +121,7 @@ namespace ResidentInformationApi.Tests.V1.Factories
             var domain = new HousingResidentInformation
             {
                 Uprn = "uprn",
-                AddressList = null,
+                Address = null,
                 FirstName = "Name",
                 LastName = "Last",
                 NhsNumber = "nhs",
@@ -138,7 +132,7 @@ namespace ResidentInformationApi.Tests.V1.Factories
             var expectedResponse = new HousingResidentInformationResponse
             {
                 Uprn = "uprn",
-                AddressList = null,
+                Address = null,
                 FirstName = "Name",
                 LastName = "Last",
                 NhsNumber = "nhs",

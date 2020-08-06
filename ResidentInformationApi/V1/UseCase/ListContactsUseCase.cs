@@ -58,13 +58,12 @@ namespace ResidentInformationApi.V1.UseCase
                 {
                     System = "Mosaic",
                     SystemId = x.MosaicId.ToString(),
-                    SystemUrl = new Uri(mosaicUrl + $"/residents/{x.MosaicId}"),
+                    SystemUrl = new Uri(mosaicUrl + $"api/v1/residents/{x.MosaicId}"),
                     Data = x.ToResponse()
                 });
 
             var allResults = academyResults.Concat(housingResults.Concat(mosaicResults));
 
-            Console.WriteLine(mosaicResults);
             return new ResidentInformationResponse
             {
                 Results = allResults.ToList()
