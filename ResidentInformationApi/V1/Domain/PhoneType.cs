@@ -17,6 +17,14 @@ namespace ResidentInformationApi.V1.Domain
         /// <summary>
         /// Fax
         /// </summary>
-        Fax
+        Fax,
+        /// <summary>
+        /// Work
+        /// </summary>
+        Work,
+        /// <summary>
+        /// Unknown
+        /// </summary>
+        Unknown
     }
 }

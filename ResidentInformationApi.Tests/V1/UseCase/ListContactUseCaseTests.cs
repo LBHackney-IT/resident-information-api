@@ -39,9 +39,9 @@ namespace ResidentInformationApi.Tests.V1.UseCase
                 _mockHousingGateway.Object,
                 _mockMosaicGateway.Object
                 );
-            _academyUrl = "http://ACADEMY_API_URL";
-            _housingUrl = "http://HOUSING_API_URL";
-            _mosaicUrl = "http://MOSAIC_API_URL";
+            _academyUrl = "http://ACADEMY_API_URL/";
+            _housingUrl = "http://HOUSING_API_URL/";
+            _mosaicUrl = "http://MOSAIC_API_URL/";
 
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _academyUrl);
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _housingUrl);
@@ -61,25 +61,23 @@ namespace ResidentInformationApi.Tests.V1.UseCase
             {
                 System = "Academy",
                 SystemId = stubbedAcademyClaimant.ClaimId.ToString(),
-                SystemUrl = new Uri(_academyUrl + $"/claim/{stubbedAcademyClaimant.ClaimId}/person/{stubbedAcademyClaimant.PersonRef}"),
+                SystemUrl = new Uri(_academyUrl + $"api/v1/claimants/claim/{stubbedAcademyClaimant.ClaimId}/person/{stubbedAcademyClaimant.PersonRef}"),
                 Data = stubbedAcademyClaimant.ToResponse()
             });
             expectedResult.Add(new ResidentInformationResult
             {
                 System = "Housing",
-                SystemId = stubbedHousingResident.HouseReference.ToString(),
-                SystemUrl = new Uri(_housingUrl + $"/households/{stubbedHousingResident.HouseReference}/people/{stubbedHousingResident.PersonNumber}"),
+                SystemId = stubbedHousingResident.HouseReference,
+                SystemUrl = new Uri(_housingUrl + $"api/v1/households/{stubbedHousingResident.HouseReference}/people/{stubbedHousingResident.PersonNumber}"),
                 Data = stubbedHousingResident.ToResponse()
             });
             expectedResult.Add(new ResidentInformationResult
             {
                 System = "Mosaic",
-                SystemId = stubbedMosaicResident.MosaicId.ToString(),
-                SystemUrl = new Uri(_mosaicUrl + $"/residents/{stubbedMosaicResident.MosaicId}"),
+                SystemId = stubbedMosaicResident.MosaicId,
+                SystemUrl = new Uri(_mosaicUrl + $"api/v1/residents/{stubbedMosaicResident.MosaicId}"),
                 Data = stubbedMosaicResident.ToResponse()
             });
-
-
 
             var rqp = new ResidentQueryParam()
             {

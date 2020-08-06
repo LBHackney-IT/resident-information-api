@@ -27,9 +27,8 @@ namespace ResidentInformationApi.V1.Gateways
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-            var results = JsonConvert.DeserializeObject<List<AcademyClaimantInformation>>(content);
-
-            return results;
+            var results = JsonConvert.DeserializeObject<AcademyClaimantResponse>(content);
+            return results.Claimants;
         }
     }
 }

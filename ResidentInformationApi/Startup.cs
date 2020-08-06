@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using ResidentInformationApi.V1.Gateways;
 using ResidentInformationApi.V1.UseCase;
 using ResidentInformationApi.Versioning;
@@ -35,6 +37,8 @@ namespace ResidentInformationApi
         {
             services
                 .AddMvc()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter()))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddApiVersioning(o =>
             {

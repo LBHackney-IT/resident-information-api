@@ -50,7 +50,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetResidentInformationReturnsEmptyArrayIfNoResultsFound()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", expectedJsonString: "[]");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", expectedJsonString: "{residents: []}");
             var received = await _classUnderTest.GetResidentInformation(rqp).ConfigureAwait(true);
 
             received.Should().BeEmpty();
@@ -63,7 +63,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
             var expected = _fixture.CreateMany<HousingResidentInformation>();
             var expectedJson = JsonConvert.SerializeObject(expected);
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", "?address=" + rqp.Address, expectedJson);
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", "?address=" + rqp.Address, "{residents: " + expectedJson + "}");
 
             var received = await _classUnderTest.GetResidentInformation(rqp).ConfigureAwait(true);
 

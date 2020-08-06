@@ -1,5 +1,14 @@
+using System.Collections.Generic;
+
 namespace ResidentInformationApi.V1.Domain
 {
+
+    public class AcademyClaimantResponse
+    {
+        public List<AcademyClaimantInformation> Claimants { get; set; }
+
+        public string NextCursor { get; set; }
+    }
     public class AcademyClaimantInformation
     {
         public int ClaimId { get; set; }

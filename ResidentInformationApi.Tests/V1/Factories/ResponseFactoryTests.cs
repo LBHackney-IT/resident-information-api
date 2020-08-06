@@ -76,14 +76,13 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 },
                 FirstName = "Name",
                 LastName = "Last",
-                NhsNumber = "nhs",
                 DateOfBirth = "DOB",
-                PhoneNumberList = new List<PhoneNumber>
+                PhoneNumber = new List<Phone>
                 {
-                    new PhoneNumber
+                    new Phone()
                     {
-                        Number = "number",
-                        Type = PhoneType.Fax
+                        PhoneNumber = "number",
+                        PhoneType = PhoneType.Fax.ToString()
                     }
                 },
             };
@@ -100,7 +99,6 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 },
                 FirstName = "Name",
                 LastName = "Last",
-                NhsNumber = "nhs",
                 DateOfBirth = "DOB",
                 PhoneNumber = new List<PhoneNumberResponse>
                 {
@@ -124,9 +122,8 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 Address = null,
                 FirstName = "Name",
                 LastName = "Last",
-                NhsNumber = "nhs",
                 DateOfBirth = "DOB",
-                PhoneNumberList = null,
+                PhoneNumber = null,
             };
 
             var expectedResponse = new HousingResidentInformationResponse
@@ -135,7 +132,6 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 Address = null,
                 FirstName = "Name",
                 LastName = "Last",
-                NhsNumber = "nhs",
                 DateOfBirth = "DOB",
                 PhoneNumber = null
             };
@@ -153,12 +149,12 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 LastName = "Last",
                 Uprn = "100000000",
                 DateOfBirth = "01/01/2001",
-                PhoneNumberList = new List<PhoneNumber>
+                PhoneNumber = new List<Phone>
                 {
-                    new PhoneNumber
+                    new Phone()
                     {
-                        Number = "07894564561",
-                        Type = PhoneType.Home
+                        PhoneNumber = "07894564561",
+                        PhoneType = PhoneType.Home.ToString()
                     }
                 },
                 AddressList = new List<Address>
@@ -215,7 +211,7 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 Uprn = "100000000",
                 DateOfBirth = "01/01/2001",
                 AddressList = null,
-                PhoneNumberList = null,
+                PhoneNumber = null,
                 NhsNumber = "2000000000"
 
             };

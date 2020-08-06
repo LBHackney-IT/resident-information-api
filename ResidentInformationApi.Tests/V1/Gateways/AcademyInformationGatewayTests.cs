@@ -51,12 +51,11 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task GetClaimantInformationReturnsEmptyArrayIfNoResultsFound()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "[]");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}");
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 
             received.Should().BeEmpty();
             received.Should().NotBeNull();
-
         }
 
         [Test]
@@ -65,7 +64,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             var rqp = new ResidentQueryParam { Address = "Address Line 1" };
             var expected = _fixture.CreateMany<AcademyClaimantInformation>();
             var expectedJson = JsonConvert.SerializeObject(expected);
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", "?address=" + rqp.Address, expectedJson);
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", "?address=" + rqp.Address, "{claimants:" + expectedJson + "}");
 
             var received = await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
 

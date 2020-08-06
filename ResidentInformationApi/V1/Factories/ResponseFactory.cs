@@ -13,6 +13,7 @@ using HousingResidentInformation = ResidentInformationApi.V1.Domain.HousingResid
 using HousingResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
 using MosaicResidentInformation = ResidentInformationApi.V1.Domain.MosaicResidentInformation;
 using MosaicResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.MosaicResidentInformation;
+using Phone = ResidentInformationApi.V1.Domain.Phone;
 using PhoneType = ResidentInformationApi.V1.Domain.PhoneType;
 using PhoneTypeResponse = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
 
@@ -42,15 +43,14 @@ namespace ResidentInformationApi.V1.Factories
                 HouseReference = domain.HouseReference,
                 PersonNumber = domain.PersonNumber,
                 TenancyReference = domain.TenancyReference,
-                NationalInsuranceNumber = domain.NationalInsuranceNumber,
+                NationalInsuranceNumber = domain.NiNumber,
                 FirstName = domain.FirstName,
                 LastName = domain.LastName,
-                NhsNumber = domain.NhsNumber,
                 DateOfBirth = domain.DateOfBirth,
                 Uprn = domain.Uprn,
                 Address = domain.Address?.ToResponse(),
-                PhoneNumber = domain.PhoneNumberList?.ToResponse(),
-                EmailAddressList = domain.EmailAddressList?.ToResponse()
+                PhoneNumber = domain.PhoneNumber?.ToResponse(),
+                EmailAddressList = domain.Email?.ToResponse()
             };
         }
 
@@ -63,42 +63,46 @@ namespace ResidentInformationApi.V1.Factories
                 LastName = domain.LastName,
                 Uprn = domain.Uprn,
                 DateOfBirth = domain.DateOfBirth,
-                PhoneNumber = domain.PhoneNumberList?.ToResponse(),
+                PhoneNumber = domain.PhoneNumber?.ToResponse(),
                 AddressList = domain.AddressList?.ToResponse(),
                 NhsNumber = domain.NhsNumber
             };
         }
 
-        private static List<Phone> ToResponse(this List<PhoneNumber> phoneNumbers)
+        private static List<Boundary.Responses.Phone> ToResponse(this List<Phone> phoneNumbers)
         {
             return phoneNumbers.Select(r => r.ToResponse()).ToList();
         }
 
-        private static Phone ToResponse(this PhoneNumber domain)
+
+        private static Boundary.Responses.Phone ToResponse(this Phone phoneNumber)
         {
-            return new Phone
+            return new Boundary.Responses.Phone
             {
-                PhoneNumber = domain.Number,
-                PhoneType = domain.Type.ToResponse()
+                PhoneNumber = phoneNumber.PhoneNumber,
+                PhoneType = phoneNumber.PhoneType.ToResponse(),
             };
         }
 
-        private static PhoneTypeResponse ToResponse(this PhoneType domain)
+        private static PhoneTypeResponse ToResponse(this string domain)
         {
             switch (domain)
             {
-                case PhoneType.Primary:
+                case "Primary":
                     return PhoneTypeResponse.Primary;
-                case PhoneType.Home:
+                case "Home":
                     return PhoneTypeResponse.Home;
-                case PhoneType.Mobile:
+                case "Mobile":
                     return PhoneTypeResponse.Mobile;
-                case PhoneType.Fax:
+                case "Fax":
                     return PhoneTypeResponse.Fax;
+                case "Work":
+                    return PhoneTypeResponse.Work;
+                case "Unknown":
+                    return PhoneTypeResponse.Unknown;
                 default:
-                    throw new ArgumentException("Phone type is invalid");
+                    return PhoneTypeResponse.Unknown;
             }
-
         }
 
         private static List<AddressResponse> ToResponse(this List<Address> addresses)
@@ -127,6 +131,19 @@ namespace ResidentInformationApi.V1.Factories
             {
                 EmailAddress = domain.EmailAddress,
                 DateLastModified = domain.DateLastModified
+            };
+        }
+
+        private static List<EmailResponse> ToResponse(this List<HousingEmail> emails)
+        {
+            return emails.Select(r => r.ToResponse()).ToList();
+        }
+        private static EmailResponse ToResponse(this HousingEmail domain)
+        {
+            return new EmailResponse
+            {
+                EmailAddress = domain.EmailAddress,
+                DateLastModified = domain.LastModified
             };
         }
     }

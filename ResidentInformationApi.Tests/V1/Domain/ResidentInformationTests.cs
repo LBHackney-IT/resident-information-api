@@ -11,10 +11,10 @@ namespace ResidentInformationApi.Tests.V1.Domain
         [Test]
         public void ResidentInformationIncludesRequiredProperties()
         {
-            var phoneNumber = new PhoneNumber
+            var phoneNumber = new Phone()
             {
-                Number = "1234567890",
-                Type = PhoneType.Home
+                PhoneNumber = "1234567890",
+                PhoneType = PhoneType.Home.ToString()
             };
 
             var address = new Address
@@ -32,7 +32,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
                 LastName = "Last",
                 Uprn = "abc123",
                 DateOfBirth = "1980-10-02",
-                PhoneNumberList = new List<PhoneNumber> { phoneNumber },
+                PhoneNumber = new List<Phone> { phoneNumber },
                 Address = address,
             };
 
@@ -40,7 +40,7 @@ namespace ResidentInformationApi.Tests.V1.Domain
             residentInformation.LastName.Should().Be("Last");
             residentInformation.Uprn.Should().Be("abc123");
             residentInformation.DateOfBirth.Should().Be("1980-10-02");
-            residentInformation.PhoneNumberList.Should().Contain(phoneNumber);
+            residentInformation.PhoneNumber.Should().Contain(phoneNumber);
             residentInformation.Address.Should().BeEquivalentTo(address);
         }
     }

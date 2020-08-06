@@ -28,9 +28,9 @@ namespace ResidentInformationApi.V1.Gateways
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-            var results = JsonConvert.DeserializeObject<List<MosaicResidentInformation>>(content);
+            var results = JsonConvert.DeserializeObject<MosaicResidentResponse>(content);
 
-            return results;
+            return results.Residents;
         }
     }
 }
