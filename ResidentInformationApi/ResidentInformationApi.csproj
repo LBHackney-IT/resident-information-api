@@ -9,7 +9,7 @@
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <AssemblyName>ResidentVulnerabilitiesApi</AssemblyName>
+        <AssemblyName>ResidentInformationApi</AssemblyName>
     </PropertyGroup>
 
 
