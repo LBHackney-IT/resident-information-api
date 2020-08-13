@@ -22,10 +22,10 @@ functions:
     name: ${self:service}-${self:provider.stage}
     handler: ResidentInformationApi::ResidentInformationApi.LambdaEntryPoint::FunctionHandlerAsync
     role: lambdaExecutionRole
-  environment:
-    ACADEMY_API_URL: ${ssm:/${self:service}/${self:provider.stage}/academy-api-url}
-    HOUSING_API_URL: ${ssm:/${self:service}/${self:provider.stage}/housing-api-url}
-    MOSAIC_API_URL: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-url}
+    environment:
+      ACADEMY_API_URL: ${ssm:/${self:service}/${self:provider.stage}/academy-api-url}
+      HOUSING_API_URL: ${ssm:/${self:service}/${self:provider.stage}/housing-api-url}
+      MOSAIC_API_URL: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-url}
     events:
       - http:
           path: /{proxy+}
