@@ -20,6 +20,7 @@ package:
 functions:
   residentInformationApi:
     name: ${self:service}-${self:provider.stage}
+    timeout: 15
     handler: ResidentInformationApi::ResidentInformationApi.LambdaEntryPoint::FunctionHandlerAsync
     role: lambdaExecutionRole
     environment:
