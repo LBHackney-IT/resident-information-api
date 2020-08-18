@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace ResidentInformationApi.Tests.V1.Helper
 {
     public static class TestHelper
     {
-        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null)
+        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null, string expectedApiKey = null)
         {
             if (expectedJsonString == null)
             {
@@ -29,7 +30,8 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(
-                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString())),
+                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString(), req, expectedApiKey)),
+
                     ItExpr.IsAny<CancellationToken>()
                     )
                 .ReturnsAsync(stubbedResponse)
@@ -54,9 +56,22 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Verifiable();
         }
 
-        private static bool CheckUrls(string endpoint, string query, string receivedRequest)
+        private static bool CheckUrls(string endpoint, string query, string receivedRequest, HttpRequestMessage req, string expectedApiKey)
         {
+
+            if (expectedApiKey != null)
+            {
+                var headers = req.Headers;
+                var correctApiKey = headers.Contains("X-API-Key") && req.Headers.GetValues("X-API-Key").First() == expectedApiKey;
+                if (correctApiKey == false)
+                {
+                    return false;
+                }
+            }
+
             return HttpUtility.UrlDecode(receivedRequest) == $"http://test-domain-name.com/api/v1/{endpoint}{query}";
+
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ResidentInformationApi.V1.Gateways
         public AcademyInformationGateway(HttpClient client)
         {
             _client = client;
+            client.DefaultRequestHeaders.Add("X-API-Key", Environment.GetEnvironmentVariable("ACADEMY_API_KEY"));
         }
         public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
         {
@@ -29,6 +30,8 @@ namespace ResidentInformationApi.V1.Gateways
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             var results = JsonConvert.DeserializeObject<AcademyClaimantResponse>(content);
             return results.Claimants;
+
         }
+
     }
 }

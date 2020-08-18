@@ -7,7 +7,7 @@ provider:
   region: eu-west-2
   apiKeys:
     - secureAccess:
-      - api-key-${self:service}-${self:provider.stage}
+        - api-key-${self:service}-${self:provider.stage}
   usagePlan:
     - secureAccess:
         throttle:
@@ -20,12 +20,17 @@ package:
 functions:
   residentInformationApi:
     name: ${self:service}-${self:provider.stage}
+    timeout: 15
     handler: ResidentInformationApi::ResidentInformationApi.LambdaEntryPoint::FunctionHandlerAsync
     role: lambdaExecutionRole
-    environments:
-      ACADEMY_API_URL: ${ssm:/apiurls/academyapi-url}
-      HOUSING_API_URL: ${ssm:/apiurls/housingapi-url}
-      MOSAIC_API_URL: ${ssm:/apiurls/mosaicapi-url}
+    environment:
+      ACADEMY_API_URL: ${ssm:/${self:service}/${self:provider.stage}/academy-api-url}
+      HOUSING_API_URL: ${ssm:/${self:service}/${self:provider.stage}/housing-api-url}
+      MOSAIC_API_URL: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-url}
+      ACADEMY_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/academy-api-key}
+      HOUSING_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/housing-api-key}
+      MOSAIC_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-key}
+
     events:
       - http:
           path: /{proxy+}

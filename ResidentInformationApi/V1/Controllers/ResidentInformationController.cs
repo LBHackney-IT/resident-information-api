@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using ResidentInformationApi.V1.Boundary.Requests;
 using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.UseCase;

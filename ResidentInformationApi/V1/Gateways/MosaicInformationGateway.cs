@@ -12,10 +12,11 @@ namespace ResidentInformationApi.V1.Gateways
     public class MosaicInformationGateway : IMosaicInformationGateway
     {
         private readonly HttpClient _client;
-        //private readonly string _baseUrl;
         public MosaicInformationGateway(HttpClient client)
         {
             _client = client;
+            client.DefaultRequestHeaders.Add("X-API-Key", Environment.GetEnvironmentVariable("MOSAIC_API_KEY"));
+
         }
         public async Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)
         {

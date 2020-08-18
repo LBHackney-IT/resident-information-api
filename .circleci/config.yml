@@ -179,15 +179,15 @@ workflows:
             branches:
               only: development
   check-and-deploy-staging-and-production:
-      jobs:
+    jobs:
       - build-and-test:
-          filters:
-            branches:
-              only: master
+        filters:
+          branches:
+            only: master
       - assume-role-staging:
           context: api-assume-role-staging-context
           requires:
-              - build-and-test
+            - build-and-test
           filters:
              branches:
                only: master
@@ -210,7 +210,7 @@ workflows:
       - assume-role-production:
           context: api-assume-role-production-context
           requires:
-              - permit-production-terraform-release
+            - permit-production-terraform-release
           filters:
              branches:
                only: master
