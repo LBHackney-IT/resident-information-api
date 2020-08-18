@@ -22,6 +22,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private Mock<HttpMessageHandler> _messageHandler;
         private Uri _uri;
         private string _currentEnv;
+        private string _apiKey;
+
 
         [SetUp]
         public void Setup()
@@ -31,6 +33,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _currentEnv = Environment.GetEnvironmentVariable("HOUSING_API_URL");
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+            _apiKey = Environment.GetEnvironmentVariable("HOUSING_API_KEY");
+            Environment.SetEnvironmentVariable("HOUSING_API_KEY", "secretKey");
 
             var httpClient = new HttpClient(_messageHandler.Object)
             {
@@ -44,6 +48,18 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _currentEnv);
+            Environment.SetEnvironmentVariable("HOUSING_API_KEY", _apiKey);
+
+        }
+
+        [Test]
+        public async Task ApiKeySuccessfullyCalled()
+        {
+            var rqp = new ResidentQueryParam();
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", expectedJsonString: "{residents: []}", expectedApiKey: "secretKey");
+            await _classUnderTest.GetResidentInformation(rqp).ConfigureAwait(true);
+            _messageHandler.Verify();
+
         }
 
         [Test]

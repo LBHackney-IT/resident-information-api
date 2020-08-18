@@ -12,7 +12,6 @@ namespace ResidentInformationApi.V1.Gateways
     public class MosaicInformationGateway : IMosaicInformationGateway
     {
         private readonly HttpClient _client;
-        //private readonly string _baseUrl;
         public MosaicInformationGateway(HttpClient client)
         {
             _client = client;

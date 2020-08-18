@@ -24,6 +24,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private string _currentEnv;
         private HttpClient _httpClient;
 
+        private string _apiKey;
+
         [SetUp]
         public void SetUp()
         {
@@ -32,6 +34,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _currentEnv = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+            _apiKey = Environment.GetEnvironmentVariable("ACADEMY_API_KEY");
+            Environment.SetEnvironmentVariable("ACADEMY_API_KEY", "secretKey");
 
             _httpClient = new HttpClient(_messageHandler.Object)
             {
@@ -45,6 +49,17 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _currentEnv);
+            Environment.SetEnvironmentVariable("ACADEMY_API_KEY", _apiKey);
+        }
+
+        [Test]
+        public async Task ApiKeySuccessfullyCalled()
+        {
+            var rqp = new ResidentQueryParam();
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}", expectedApiKey: "secretKey");
+            await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
+            _messageHandler.Verify();
+
         }
 
         [Test]
