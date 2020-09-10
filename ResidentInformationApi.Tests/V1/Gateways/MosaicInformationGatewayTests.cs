@@ -31,8 +31,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _uri = new Uri("http://test-domain-name.com/");
             _currentEnv = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
             Environment.SetEnvironmentVariable("MOSAIC_API_URL", _uri.OriginalString);
-            _apiKey = Environment.GetEnvironmentVariable("MOSAIC_API_KEY");
-            Environment.SetEnvironmentVariable("MOSAIC_API_KEY", "secretKey");
+            _apiKey = Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN");
+            Environment.SetEnvironmentVariable("MOSAIC_API_TOKEN", "secretKey");
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
             var httpClient = new HttpClient(_messageHandler.Object)
@@ -47,7 +47,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("MOSAIC_API_URL", _currentEnv);
-            Environment.SetEnvironmentVariable("MOSAIC_API_KEY", _apiKey);
+            Environment.SetEnvironmentVariable("MOSAIC_API_TOKEN", _apiKey);
 
         }
 

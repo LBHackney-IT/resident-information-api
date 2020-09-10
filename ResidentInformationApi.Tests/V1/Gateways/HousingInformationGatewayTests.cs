@@ -33,8 +33,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _currentEnv = Environment.GetEnvironmentVariable("HOUSING_API_URL");
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
-            _apiKey = Environment.GetEnvironmentVariable("HOUSING_API_KEY");
-            Environment.SetEnvironmentVariable("HOUSING_API_KEY", "secretKey");
+            _apiKey = Environment.GetEnvironmentVariable("HOUSING_API_TOKEN");
+            Environment.SetEnvironmentVariable("HOUSING_API_TOKEN", "secretKey");
 
             var httpClient = new HttpClient(_messageHandler.Object)
             {
@@ -48,7 +48,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _currentEnv);
-            Environment.SetEnvironmentVariable("HOUSING_API_KEY", _apiKey);
+            Environment.SetEnvironmentVariable("HOUSING_API_TOKEN", _apiKey);
 
         }
 
