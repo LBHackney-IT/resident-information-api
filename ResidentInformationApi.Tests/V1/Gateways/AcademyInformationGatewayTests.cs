@@ -24,7 +24,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private string _currentEnv;
         private HttpClient _httpClient;
 
-        private string _apiKey;
+        private string _apiToken;
 
         [SetUp]
         public void SetUp()
@@ -34,14 +34,15 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _currentEnv = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
-            _apiKey = Environment.GetEnvironmentVariable("ACADEMY_API_KEY");
-            Environment.SetEnvironmentVariable("ACADEMY_API_KEY", "secretKey");
+            _apiToken = Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN");
+            Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", "secretKey");
 
             _httpClient = new HttpClient(_messageHandler.Object)
             {
                 BaseAddress = _uri,
             };
 
+            _httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
             _classUnderTest = new AcademyInformationGateway(_httpClient);
         }
 
@@ -49,14 +50,14 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _currentEnv);
-            Environment.SetEnvironmentVariable("ACADEMY_API_KEY", _apiKey);
+            Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", _apiToken);
         }
 
         [Test]
         public async Task ApiKeySuccessfullyCalled()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}", expectedApiKey: "secretKey");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}", expectedApiToken: "secretKey");
             await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
             _messageHandler.Verify();
 

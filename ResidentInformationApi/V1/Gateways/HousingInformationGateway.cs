@@ -16,7 +16,6 @@ namespace ResidentInformationApi.V1.Gateways
         public HousingInformationGateway(HttpClient client)
         {
             _client = client;
-            client.DefaultRequestHeaders.Add("X-API-Key", Environment.GetEnvironmentVariable("HOUSING_API_KEY"));
         }
 
         public async Task<List<HousingResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)

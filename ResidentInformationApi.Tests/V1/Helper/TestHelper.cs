@@ -13,7 +13,7 @@ namespace ResidentInformationApi.Tests.V1.Helper
 {
     public static class TestHelper
     {
-        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null, string expectedApiKey = null)
+        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null, string expectedApiToken = null)
         {
             if (expectedJsonString == null)
             {
@@ -30,7 +30,7 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(
-                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString(), req, expectedApiKey)),
+                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString(), req, expectedApiToken)),
 
                     ItExpr.IsAny<CancellationToken>()
                     )
@@ -56,14 +56,14 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Verifiable();
         }
 
-        private static bool CheckUrls(string endpoint, string query, string receivedRequest, HttpRequestMessage req, string expectedApiKey)
+        private static bool CheckUrls(string endpoint, string query, string receivedRequest, HttpRequestMessage req, string expectedApiToken)
         {
 
-            if (expectedApiKey != null)
+            if (expectedApiToken != null)
             {
                 var headers = req.Headers;
-                var correctApiKey = headers.Contains("X-API-Key") && req.Headers.GetValues("X-API-Key").First() == expectedApiKey;
-                if (correctApiKey == false)
+                var correctApiToken = headers.Contains("Authorization") && req.Headers.GetValues("Authorization").First() == expectedApiToken;
+                if (correctApiToken == false)
                 {
                     return false;
                 }
