@@ -24,7 +24,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         private string _currentEnv;
         private HttpClient _httpClient;
 
-        private string _apiKey;
+        private string _apiToken;
 
         [SetUp]
         public void SetUp()
@@ -34,7 +34,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _currentEnv = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _uri.OriginalString);
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
-            _apiKey = Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN");
+            _apiToken = Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN");
             Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", "secretKey");
 
             _httpClient = new HttpClient(_messageHandler.Object)
@@ -49,7 +49,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public void TearDown()
         {
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _currentEnv);
-            Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", _apiKey);
+            Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", _apiToken);
         }
 
         [Test]

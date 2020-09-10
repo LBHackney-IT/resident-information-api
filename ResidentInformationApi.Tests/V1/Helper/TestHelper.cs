@@ -56,14 +56,14 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Verifiable();
         }
 
-        private static bool CheckUrls(string endpoint, string query, string receivedRequest, HttpRequestMessage req, string expectedApiKey)
+        private static bool CheckUrls(string endpoint, string query, string receivedRequest, HttpRequestMessage req, string expectedApiToken)
         {
 
-            if (expectedApiKey != null)
+            if (expectedApiToken != null)
             {
                 var headers = req.Headers;
-                var correctApiKey = headers.Contains("X-API-Key") && req.Headers.GetValues("X-API-Key").First() == expectedApiKey;
-                if (correctApiKey == false)
+                var correctApiToken = headers.Contains("Authorization") && req.Headers.GetValues("Authorization").First() == expectedApiToken;
+                if (correctApiToken == false)
                 {
                     return false;
                 }

@@ -55,7 +55,7 @@ namespace ResidentInformationApi
                     {
                         In = ParameterLocation.Header,
                         Description = "Your Hackney API Key",
-                        Name = "X-Api-Key",
+                        Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
                     });
 
