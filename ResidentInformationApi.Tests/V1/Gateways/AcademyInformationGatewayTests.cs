@@ -42,8 +42,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
                 BaseAddress = _uri,
             };
 
-            //_httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
-
+            _httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
             _classUnderTest = new AcademyInformationGateway(_httpClient);
         }
 
