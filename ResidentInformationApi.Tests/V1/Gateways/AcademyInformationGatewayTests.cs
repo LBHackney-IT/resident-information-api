@@ -42,6 +42,8 @@ namespace ResidentInformationApi.Tests.V1.Gateways
                 BaseAddress = _uri,
             };
 
+            //_httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
+
             _classUnderTest = new AcademyInformationGateway(_httpClient);
         }
 
@@ -56,7 +58,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task ApiKeySuccessfullyCalled()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}", expectedApiKey: "secretKey");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "claimants", expectedJsonString: "{claimants: []}", expectedApiToken: "secretKey");
             await _classUnderTest.GetClaimantInformation(rqp).ConfigureAwait(true);
             _messageHandler.Verify();
 

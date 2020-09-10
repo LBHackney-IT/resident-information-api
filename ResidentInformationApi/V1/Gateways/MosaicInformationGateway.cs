@@ -15,7 +15,7 @@ namespace ResidentInformationApi.V1.Gateways
         public MosaicInformationGateway(HttpClient client)
         {
             _client = client;
-            client.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN"));
+            _client.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN"));
 
         }
         public async Task<List<MosaicResidentInformation>> GetResidentInformation(ResidentQueryParam rqp)

@@ -55,7 +55,7 @@ namespace ResidentInformationApi
                     {
                         In = ParameterLocation.Header,
                         Description = "Your Hackney API Key",
-                        Name = "Authorization",
+                        Name = "X-Api-Key",
                         Type = SecuritySchemeType.ApiKey
                     });
 
@@ -123,16 +123,19 @@ namespace ResidentInformationApi
             services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>(a =>
             {
                 a.BaseAddress = new Uri(academyUrl);
+                //a.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
             });
 
             services.AddHttpClient<IHousingInformationGateway, HousingInformationGateway>(a =>
             {
                 a.BaseAddress = new Uri(housingUrl);
+                //a.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("HOUSING_API_TOKEN"));
             });
 
             services.AddHttpClient<IMosaicInformationGateway, MosaicInformationGateway>(a =>
             {
                 a.BaseAddress = new Uri(mosaicUrl);
+                //a.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN"));
             });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

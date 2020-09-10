@@ -35,12 +35,13 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             Environment.SetEnvironmentVariable("MOSAIC_API_TOKEN", "secretKey");
             _messageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
-            var httpClient = new HttpClient(_messageHandler.Object)
+            var _httpClient = new HttpClient(_messageHandler.Object)
             {
                 BaseAddress = _uri,
             };
 
-            _classUnderTest = new MosaicInformationGateway(httpClient);
+            //_httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN"));
+            _classUnderTest = new MosaicInformationGateway(_httpClient);
         }
 
         [TearDown]
@@ -52,10 +53,10 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         }
 
         [Test]
-        public async Task ApiKeySuccessfullyCalled()
+        public async Task ApiTokenSuccessfullyCalled()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "residents", expectedJsonString: "{residents: []}", expectedApiKey: "secretKey");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "residents", expectedJsonString: "{residents: []}", expectedApiToken: "secretKey");
             await _classUnderTest.GetResidentInformation(rqp).ConfigureAwait(true);
             _messageHandler.Verify();
 

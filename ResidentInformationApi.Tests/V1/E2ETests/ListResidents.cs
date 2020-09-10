@@ -23,7 +23,7 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
             HelperMethods.SetupHousingResponseWithHouseholds("{residents:[]}", MockHousingApi);
             HelperMethods.SetupMosaicResponseWithClaimants("{residents: []}", MockMosaicApi);
             var url = new Uri("/api/v1/residents?first_name=joe", UriKind.Relative);
-            var response = await Client.GetAsync(url).ConfigureAwait(true);
+            var response = await Client.GetAsync(url).ConfigureAwait(false);
             response.StatusCode.Should().Be(200);
         }
 

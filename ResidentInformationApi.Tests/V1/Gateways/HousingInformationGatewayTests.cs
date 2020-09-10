@@ -36,12 +36,13 @@ namespace ResidentInformationApi.Tests.V1.Gateways
             _apiToken = Environment.GetEnvironmentVariable("HOUSING_API_TOKEN");
             Environment.SetEnvironmentVariable("HOUSING_API_TOKEN", "secretKey");
 
-            var httpClient = new HttpClient(_messageHandler.Object)
+            var _httpClient = new HttpClient(_messageHandler.Object)
             {
                 BaseAddress = _uri,
             };
+            //_httpClient.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("HOUSING_API_TOKEN"));
 
-            _classUnderTest = new HousingInformationGateway(httpClient);
+            _classUnderTest = new HousingInformationGateway(_httpClient);
         }
 
         [TearDown]
@@ -56,7 +57,7 @@ namespace ResidentInformationApi.Tests.V1.Gateways
         public async Task ApiKeySuccessfullyCalled()
         {
             var rqp = new ResidentQueryParam();
-            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", expectedJsonString: "{residents: []}", expectedApiKey: "secretKey");
+            TestHelper.SetUpMessageHandlerToReturnJson(_messageHandler, "households", expectedJsonString: "{residents: []}", expectedApiToken: "secretKey");
             await _classUnderTest.GetResidentInformation(rqp).ConfigureAwait(true);
             _messageHandler.Verify();
 

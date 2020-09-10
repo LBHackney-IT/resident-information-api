@@ -13,7 +13,7 @@ namespace ResidentInformationApi.Tests.V1.Helper
 {
     public static class TestHelper
     {
-        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null, string expectedApiKey = null)
+        public static void SetUpMessageHandlerToReturnJson(Mock<HttpMessageHandler> messageHandler, string endpoint, string rqpString = null, string expectedJsonString = null, string expectedApiToken = null)
         {
             if (expectedJsonString == null)
             {
@@ -30,7 +30,7 @@ namespace ResidentInformationApi.Tests.V1.Helper
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(
-                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString(), req, expectedApiKey)),
+                        req => CheckUrls(endpoint, rqpString, req.RequestUri.ToString(), req, expectedApiToken)),
 
                     ItExpr.IsAny<CancellationToken>()
                     )

@@ -15,7 +15,7 @@ namespace ResidentInformationApi.V1.Gateways
         public AcademyInformationGateway(HttpClient client)
         {
             _client = client;
-            client.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
+            _client.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ACADEMY_API_TOKEN"));
         }
         public async Task<List<AcademyClaimantInformation>> GetClaimantInformation(ResidentQueryParam rqp)
         {
