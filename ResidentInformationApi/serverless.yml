@@ -19,9 +19,9 @@ functions:
       ACADEMY_API_URL: ${ssm:/${self:service}/${self:provider.stage}/academy-api-url}
       HOUSING_API_URL: ${ssm:/${self:service}/${self:provider.stage}/housing-api-url}
       MOSAIC_API_URL: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-url}
-      ACADEMY_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/academy-api-key}
-      HOUSING_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/housing-api-key}
-      MOSAIC_API_KEY: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-key}
+      ACADEMY_API_TOKEN: ${ssm:/${self:service}/${self:provider.stage}/academy-api-token}
+      HOUSING_API_TOKEN: ${ssm:/${self:service}/${self:provider.stage}/housing-api-token}
+      MOSAIC_API_TOKEN: ${ssm:/${self:service}/${self:provider.stage}/mosaic-api-token}
 
     events:
       - http:
