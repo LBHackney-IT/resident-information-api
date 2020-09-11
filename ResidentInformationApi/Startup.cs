@@ -120,6 +120,8 @@ namespace ResidentInformationApi
             var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_URL");
             var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
 
+            Console.Write("In Startup");
+            Console.Write(academyUrl);
             services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>(a =>
             {
                 a.BaseAddress = new Uri(academyUrl);

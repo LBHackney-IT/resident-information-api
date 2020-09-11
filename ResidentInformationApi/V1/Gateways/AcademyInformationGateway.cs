@@ -21,6 +21,8 @@ namespace ResidentInformationApi.V1.Gateways
             var rqpString = DictionaryBuilder.BuildQueryDictionary(rqp);
             var builder = new UriBuilder();
             builder.Query = rqpString;
+            Console.Write("In gateway");
+            Console.Write(JsonConvert.SerializeObject(_client.DefaultRequestHeaders));
             var response = await _client.GetAsync(new Uri("api/v1/claimants" + builder.Query, UriKind.Relative)).ConfigureAwait(true);
 
             //throw exception if not 200
