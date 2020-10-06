@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Bogus;
 using FluentAssertions;
 using NUnit.Framework;
+using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Factories;
 using AcademyClaimantInformation = ResidentInformationApi.V1.Domain.AcademyClaimantInformation;
@@ -11,6 +13,7 @@ using HousingResidentInformation = ResidentInformationApi.V1.Domain.HousingResid
 using HousingResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.HousingResidentInformation;
 using MosaicResidentInformation = ResidentInformationApi.V1.Domain.MosaicResidentInformation;
 using MosaicResidentInformationResponse = ResidentInformationApi.V1.Boundary.Responses.MosaicResidentInformation;
+using Phone = ResidentInformationApi.V1.Domain.Phone;
 using PhoneNumberResponse = ResidentInformationApi.V1.Boundary.Responses.Phone;
 using PhoneType = ResidentInformationApi.V1.Domain.PhoneType;
 using PhoneTypeResponse = ResidentInformationApi.V1.Boundary.Responses.PhoneType;
@@ -19,6 +22,7 @@ namespace ResidentInformationApi.Tests.V1.Factories
 {
     public class ResponseFactoryTests
     {
+        private readonly Faker _faker = new Faker();
         [Test]
         public void CanMapAcademyInformationFromDomainToResponse()
         {
@@ -225,6 +229,37 @@ namespace ResidentInformationApi.Tests.V1.Factories
                 NhsNumber = "2000000000"
             };
 
+            domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
+        }
+
+        [Test]
+        public void CanMapElectoralRegisterDomainToResponse()
+        {
+            var domain = new ElectoralRegisterResidentInformation
+            {
+                DateOfBirth = _faker.Date.Past(),
+                ElectoralRegisterId = _faker.Random.Int(0, 100),
+                Title = _faker.Random.Word(),
+                FirstName = _faker.Person.FirstName,
+                MiddleName = _faker.Person.FirstName,
+                LastName = _faker.Person.LastName,
+                Uprn = _faker.Random.AlphaNumeric(9),
+                Nationality = _faker.Random.Word(),
+                Email = _faker.Person.Email
+            };
+
+            var expectedResponse = new ElectoralRegisterResidentResponse
+            {
+                DateOfBirth = domain.DateOfBirth.Date.ToString(),
+                ElectoralRegisterId = domain.ElectoralRegisterId.ToString(),
+                Title = domain.Title,
+                FirstName = domain.FirstName,
+                MiddleName = domain.MiddleName,
+                LastName = domain.LastName,
+                Uprn = domain.Uprn,
+                Nationality = domain.Nationality,
+                Email = domain.Email
+            };
             domain.ToResponse().Should().BeEquivalentTo(expectedResponse);
         }
     }

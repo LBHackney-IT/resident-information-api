@@ -22,6 +22,7 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
             HelperMethods.SetupAcademyResponseWithClaimants("{claimants: []}", MockAcademyAPI);
             HelperMethods.SetupHousingResponseWithHouseholds("{residents:[]}", MockHousingApi);
             HelperMethods.SetupMosaicResponseWithClaimants("{residents: []}", MockMosaicApi);
+            HelperMethods.SetupElectoralRegisterResponseWithResidents("{residents: []}", MockElectoralRegisterApi);
             var url = new Uri("/api/v1/residents?first_name=joe", UriKind.Relative);
             var response = await Client.GetAsync(url).ConfigureAwait(false);
             response.StatusCode.Should().Be(200);
@@ -44,7 +45,11 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
             HelperMethods.SetupMosaicResponseWithClaimants(residents.ToJson(), MockMosaicApi);
             var expectedResidentsResponse = HelperMethods.MapToResponse(residents);
 
-            expectedResponse.Results = expectedAcademyResponses.Concat(expectedHousingResponse).Concat(expectedResidentsResponse).ToList();
+            var electoralRegisterResidents = _fixture.Create<ElectoralRegisterResidentsResponse>();
+            HelperMethods.SetupElectoralRegisterResponseWithResidents(electoralRegisterResidents.ToJson(), MockElectoralRegisterApi);
+            var expectedelectoralRegisterResidents = HelperMethods.MapToResponse(electoralRegisterResidents);
+
+            expectedResponse.Results = expectedAcademyResponses.Concat(expectedHousingResponse).Concat(expectedResidentsResponse).Concat(expectedelectoralRegisterResidents).ToList();
 
             var url = new Uri("/api/v1/residents?first_name=joe", UriKind.Relative);
             var response = await Client.GetAsync(url).ConfigureAwait(true);

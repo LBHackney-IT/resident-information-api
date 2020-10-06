@@ -57,6 +57,13 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
                     .WithStatusCode(HttpStatusCode.OK));
         }
 
+        public static void SetupElectoralRegisterResponseWithResidents(string residents, WireMockServer mockHousingApi)
+        {
+            mockHousingApi.Given(Request.Create().WithPath("/api/v1/residents").UsingGet())
+                .RespondWith(Response.Create().WithBody(residents, encoding: Encoding.UTF8)
+                    .WithStatusCode(HttpStatusCode.OK));
+        }
+
         public static IEnumerable<ResidentInformationResult> MapToResponse(HousingApiResponse households)
         {
             return households.Residents.Select(h => new ResidentInformationResult
@@ -153,6 +160,28 @@ namespace ResidentInformationApi.Tests.V1.E2ETests
                             PhoneType = PhoneType.Unknown
                         }).ToList(),
                     DateOfBirth = r.DateOfBirth
+                }
+            });
+        }
+
+        public static IEnumerable<ResidentInformationResult> MapToResponse(ElectoralRegisterResidentsResponse residents)
+        {
+            return residents.Residents.Select(c => new ResidentInformationResult
+            {
+                System = "Electoral Register",
+                SystemId = c.ElectoralRegisterId.ToString(),
+                SystemUrl = new Uri($"{Environment.GetEnvironmentVariable("ELECTORAL_REGISTER_API_URL")}api/v1/residents/{c.ElectoralRegisterId}"),
+                Data = new ElectoralRegisterResidentResponse
+                {
+                    ElectoralRegisterId = c.ElectoralRegisterId.ToString(),
+                    DateOfBirth = c.DateOfBirth.Date.ToString(),
+                    Title = c.Title,
+                    FirstName = c.FirstName,
+                    MiddleName = c.MiddleName,
+                    LastName = c.LastName,
+                    Uprn = c.Uprn,
+                    Nationality = c.Nationality,
+                    Email = c.Email
                 }
             });
         }

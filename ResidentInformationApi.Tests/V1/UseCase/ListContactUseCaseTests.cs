@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using ResidentInformationApi.V1.Boundary.Requests;
 using ResidentInformationApi.V1.Boundary.Responses;
+using ResidentInformationApi.V1.Domain;
 using ResidentInformationApi.V1.Factories;
 using ResidentInformationApi.V1.Gateways;
 using ResidentInformationApi.V1.UseCase;
@@ -22,10 +23,12 @@ namespace ResidentInformationApi.Tests.V1.UseCase
         private Mock<IAcademyInformationGateway> _mockAcademyGateway;
         private Mock<IHousingInformationGateway> _mockHousingGateway;
         private Mock<IMosaicInformationGateway> _mockMosaicGateway;
+        private Mock<IElectoralRegisterGateway> _mockElectoralRegisterGateway;
         private ListContactsUseCase _classUnderTest;
         private string _academyUrl;
         private string _housingUrl;
         private string _mosaicUrl;
+        private string _electoralRegisterUrl;
         private readonly Fixture _fixture = new Fixture();
 
         [SetUp]
@@ -34,18 +37,22 @@ namespace ResidentInformationApi.Tests.V1.UseCase
             _mockAcademyGateway = new Mock<IAcademyInformationGateway>();
             _mockHousingGateway = new Mock<IHousingInformationGateway>();
             _mockMosaicGateway = new Mock<IMosaicInformationGateway>();
+            _mockElectoralRegisterGateway = new Mock<IElectoralRegisterGateway>();
             _classUnderTest = new ListContactsUseCase(
                 _mockAcademyGateway.Object,
                 _mockHousingGateway.Object,
-                _mockMosaicGateway.Object
+                _mockMosaicGateway.Object,
+                _mockElectoralRegisterGateway.Object
                 );
             _academyUrl = "http://ACADEMY_API_URL/";
             _housingUrl = "http://HOUSING_API_URL/";
             _mosaicUrl = "http://MOSAIC_API_URL/";
+            _electoralRegisterUrl = "http://ELECTORAL_REGISTER_API_URL/";
 
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", _academyUrl);
             Environment.SetEnvironmentVariable("HOUSING_API_URL", _housingUrl);
             Environment.SetEnvironmentVariable("MOSAIC_API_URL", _mosaicUrl);
+            Environment.SetEnvironmentVariable("ELECTORAL_REGISTER_API_URL", _electoralRegisterUrl);
         }
 
         [Test]
@@ -54,6 +61,7 @@ namespace ResidentInformationApi.Tests.V1.UseCase
             var stubbedAcademyClaimant = _fixture.Create<AcademyClaimantInformation>();
             var stubbedHousingResident = _fixture.Create<HousingResidentInformation>();
             var stubbedMosaicResident = _fixture.Create<MosaicResidentInformation>();
+            var stubbedElectoralRegisterResident = _fixture.Create<ElectoralRegisterResidentInformation>();
 
             var expectedResult = new List<ResidentInformationResult>();
 
@@ -78,6 +86,13 @@ namespace ResidentInformationApi.Tests.V1.UseCase
                 SystemUrl = new Uri(_mosaicUrl + $"api/v1/residents/{stubbedMosaicResident.MosaicId}"),
                 Data = stubbedMosaicResident.ToResponse()
             });
+            expectedResult.Add(new ResidentInformationResult
+            {
+                System = "Electoral Register",
+                SystemId = stubbedElectoralRegisterResident.ElectoralRegisterId.ToString(),
+                SystemUrl = new Uri(_electoralRegisterUrl + $"api/v1/residents/{stubbedElectoralRegisterResident.ElectoralRegisterId}"),
+                Data = stubbedElectoralRegisterResident.ToResponse()
+            });
 
             var rqp = new ResidentQueryParam()
             {
@@ -96,6 +111,9 @@ namespace ResidentInformationApi.Tests.V1.UseCase
             _mockMosaicGateway.Setup(x =>
                 x.GetResidentInformation(rqp))
                 .Returns(Task.FromResult(new List<MosaicResidentInformation> { stubbedMosaicResident }));
+            _mockElectoralRegisterGateway.Setup(x =>
+                x.GetResidentsInformation(rqp))
+                .Returns(Task.FromResult(new List<ElectoralRegisterResidentInformation> { stubbedElectoralRegisterResident }));
 
             var response = await _classUnderTest.Execute(rqp).ConfigureAwait(true);
 
