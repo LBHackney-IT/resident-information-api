@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ResidentInformationApi.V1.Boundary.Responses;
 using ResidentInformationApi.V1.Domain;
 using AcademyClaimantInformation = ResidentInformationApi.V1.Domain.AcademyClaimantInformation;
 using AcademyClaimantInformationResponse = ResidentInformationApi.V1.Boundary.Responses.AcademyClaimantInformation;
@@ -62,6 +63,22 @@ namespace ResidentInformationApi.V1.Factories
                 PhoneNumber = domain.PhoneNumber?.ToResponse(),
                 AddressList = domain.AddressList?.ToResponse(),
                 NhsNumber = domain.NhsNumber
+            };
+        }
+
+        public static ElectoralRegisterResidentResponse ToResponse(this ElectoralRegisterResidentInformation domain)
+        {
+            return new ElectoralRegisterResidentResponse
+            {
+                ElectoralRegisterId = domain.ElectoralRegisterId.ToString(),
+                Title = domain.Title,
+                FirstName = domain.FirstName,
+                MiddleName = domain.MiddleName,
+                LastName = domain.LastName,
+                Uprn = domain.Uprn,
+                DateOfBirth = domain.DateOfBirth.Date.ToString(),
+                Email = domain.Email,
+                Nationality = domain.Nationality
             };
         }
 

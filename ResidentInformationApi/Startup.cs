@@ -119,6 +119,7 @@ namespace ResidentInformationApi
             var academyUrl = Environment.GetEnvironmentVariable("ACADEMY_API_URL");
             var housingUrl = Environment.GetEnvironmentVariable("HOUSING_API_URL");
             var mosaicUrl = Environment.GetEnvironmentVariable("MOSAIC_API_URL");
+            var electoralRegisterApiUrl = Environment.GetEnvironmentVariable("ELECTORAL_REGISTER_API_URL");
 
             services.AddHttpClient<IAcademyInformationGateway, AcademyInformationGateway>(a =>
             {
@@ -136,6 +137,12 @@ namespace ResidentInformationApi
             {
                 a.BaseAddress = new Uri(mosaicUrl);
                 a.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("MOSAIC_API_TOKEN"));
+            });
+
+            services.AddHttpClient<IElectoralRegisterGateway, ElectoralRegisterGateway>(a =>
+            {
+                a.BaseAddress = new Uri(electoralRegisterApiUrl);
+                a.DefaultRequestHeaders.Add("Authorization", Environment.GetEnvironmentVariable("ELECTORAL_REGISTER_API_TOKEN"));
             });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

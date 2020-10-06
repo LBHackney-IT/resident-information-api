@@ -13,6 +13,7 @@ namespace ResidentInformationApi.Tests
         protected WireMockServer MockAcademyAPI { get; private set; }
         protected WireMockServer MockHousingApi { get; private set; }
         protected WireMockServer MockMosaicApi { get; private set; }
+        protected WireMockServer MockElectoralRegisterApi { get; private set; }
         private MockWebApplicationFactory<TStartup> _factory;
 
         [SetUp]
@@ -34,6 +35,8 @@ namespace ResidentInformationApi.Tests
             MockHousingApi.Dispose();
             MockMosaicApi.Stop();
             MockMosaicApi.Dispose();
+            MockElectoralRegisterApi.Stop();
+            MockElectoralRegisterApi.Dispose();
         }
 
         private void ConfigureMockApis()
@@ -41,13 +44,15 @@ namespace ResidentInformationApi.Tests
             MockAcademyAPI = WireMockServer.Start();
             MockHousingApi = WireMockServer.Start();
             MockMosaicApi = WireMockServer.Start();
+            MockElectoralRegisterApi = WireMockServer.Start();
             Environment.SetEnvironmentVariable("ACADEMY_API_URL", $"http://localhost:{MockAcademyAPI.Ports[0]}/");
             Environment.SetEnvironmentVariable("HOUSING_API_URL", $"http://localhost:{MockHousingApi.Ports[0]}/");
             Environment.SetEnvironmentVariable("MOSAIC_API_URL", $"http://localhost:{MockMosaicApi.Ports[0]}/");
+            Environment.SetEnvironmentVariable("ELECTORAL_REGISTER_API_URL", $"http://localhost:{MockElectoralRegisterApi.Ports[0]}/");
             Environment.SetEnvironmentVariable("ACADEMY_API_TOKEN", "token");
             Environment.SetEnvironmentVariable("MOSAIC_API_TOKEN", "token");
             Environment.SetEnvironmentVariable("HOUSING_API_TOKEN", "token");
-
+            Environment.SetEnvironmentVariable("ELECTORAL_REGISTER_API_TOKEN", "token");
         }
     }
 }

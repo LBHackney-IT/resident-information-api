@@ -26,7 +26,6 @@ namespace ResidentInformationApi.Tests.V1.Controllers
         {
             _mockListContactsUseCase = new Mock<IListContactsUseCase>();
             _classUnderTest = new ResidentInformationController(_mockListContactsUseCase.Object);
-
         }
 
         [Test]
